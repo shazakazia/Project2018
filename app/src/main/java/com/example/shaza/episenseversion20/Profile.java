@@ -13,9 +13,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private TextView name;
+    //private TextView pid = (TextView) findViewById(R.id.pid);
+    private Button buttontest ;
+    private RequestQueue mQueue ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +51,47 @@ public class Profile extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Intent intent = getIntent();
-    }
 
+
+        name = (TextView) findViewById(R.id.name);
+        buttontest = (Button) findViewById(R.id.buttontest);
+
+        mQueue = Volley.newRequestQueue(this);
+        buttontest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jsonParse();
+            }
+        });
+    }
+    private void jsonParse(){
+        String url = "http://10.0.2.2:3000/records ";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+            new Response.Listener<JSONObject>(){
+            @Override
+                public void onResponse(JSONObject response){
+                try {
+                    JSONArray jsonArray = response.getJSONArray("Patients");
+                    for (int i = 0; i< jsonArray.length();i++)
+                    {
+                        JSONObject patient = jsonArray.getJSONObject(i);
+                        String fullname = patient.getString("full name");
+                        int id = patient.getInt("id");
+
+                        name.setText(fullname);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            },new Response.ErrorListener(){
+                public void onErrorResponse(VolleyError error){
+                    error.printStackTrace();
+                }
+        });
+
+        mQueue.add(request);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
