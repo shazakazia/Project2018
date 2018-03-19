@@ -24,6 +24,7 @@
                 android:layout_height="100dp"
                 android:src="@drawable/contact_default" />
             <TextView
+                android:id="@+id/name"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
@@ -51,14 +52,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Last Activity"
+                        android:text="Patient ID"
                         android:textSize="17sp"
                         android:textStyle="bold"
                         android:textColor="@color/grey" />
                     <TextView
+                        android:id="@+id/pid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="21 days ago"
+                        android:text="NO ID "
                         android:textColor="@color/darkblue"
                         android:textStyle="bold"/>
                 </LinearLayout>
@@ -111,6 +113,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+        <Button
+            android:id="@+id/buttontest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test"></Button>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
