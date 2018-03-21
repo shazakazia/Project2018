@@ -34,7 +34,6 @@ public class signUp extends Activity {
     private final String key_firstname="firstname";
     private final String key_lastname="lastname";
     private final String key_patientid="patientid";
-    private final String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +69,13 @@ public class signUp extends Activity {
     }
 
     private void userSignUp(){
+
         final String password = passwordedit.getText().toString().trim();
         final String email = emailedit.getText().toString().trim();
         final String fname = firstnameedit.getText().toString().trim();
         final String lname = lastnameedit.getText().toString().trim();
         final String pid = patientidedit.getText().toString().trim();
+        final String url = "http://10.0.2.2:3000/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
