@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class loginScreen extends Activity {
     private Button signin;
-    private Button go_to_signup;
+    private Button signupbtn;
     private EditText emailedit;
     private EditText passwordedit;
 
@@ -36,7 +36,7 @@ public class loginScreen extends Activity {
         signin=(Button)findViewById(R.id.signin);
         emailedit = (EditText)findViewById(R.id.email);
         passwordedit = (EditText)findViewById(R.id.password);
-        go_to_signup = (Button)findViewById(R.id.go_to_signup);
+        signupbtn = (Button)findViewById(R.id.go_to_signup);
 
 
           signin.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +46,8 @@ public class loginScreen extends Activity {
 
             }
         });
-        go_to_signup.setOnClickListener(new View.OnClickListener(){
+
+        signupbtn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
                 Intent i=new Intent(
