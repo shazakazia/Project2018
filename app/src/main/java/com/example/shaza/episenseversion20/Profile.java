@@ -30,7 +30,7 @@ import org.w3c.dom.Text;
 //testing .. integration
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView test;
+    private TextView name;
     //private TextView pid = (TextView) findViewById(R.id.pid);
     private Button buttontest ;
     private RequestQueue mQueue ;
@@ -53,7 +53,7 @@ public class Profile extends AppCompatActivity
         Intent intent = getIntent();
 
 
-        test = (TextView) findViewById(R.id.testing);
+        name = (TextView) findViewById(R.id.name);
         buttontest = (Button) findViewById(R.id.buttontest);
 
         mQueue = Volley.newRequestQueue(this);
@@ -77,8 +77,8 @@ public class Profile extends AppCompatActivity
                         JSONObject patient = jsonArray.getJSONObject(i);
                         String fullname = patient.getString("name");
                         int id = patient.getInt("id");
+                        name.setText(fullname);
 
-                        test.append(fullname + ","+ String.valueOf(id)+"\n\n");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
