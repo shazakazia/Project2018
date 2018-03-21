@@ -6,14 +6,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class loginScreen extends Activity {
     private Button signin;
+    private EditText usernameedit;
+    private EditText passwordedit;
+    private EditText emailedit;
+
+    private final String key_username="username";
+    private final String key_password="password";
+    private final String key_email="email";
+    private final String url = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         signin=(Button)findViewById(R.id.signin);
+        usernameedit = (EditText)findViewById(R.id.username);
+        passwordedit = (EditText)findViewById(R.id.password);
+        emailedit = (EditText)findViewById(R.id.email);
+/*
         signin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
@@ -23,6 +48,43 @@ public class loginScreen extends Activity {
                 startActivity(i);
             }
         });
+*/          signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+            }
+        });
+    }
+
+    private void userLogin(){
+        final String username = usernameedit.getText().toString().trim();
+        final String password = passwordedit.getText().toString().trim();
+        final String email = emailedit.getText().toString().trim();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String,String>();
+                params.put(key_password,password);
+                params.put(key_username,username);
+                params.put(key_email,email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }
 //second commit
