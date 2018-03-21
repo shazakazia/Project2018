@@ -22,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -32,7 +33,8 @@ import org.w3c.dom.Text;
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name;
-    //private TextView pid = (TextView) findViewById(R.id.pid);
+    private TextView showid ;
+    private TextView showemail ;
     private Button buttontest ;
     private RequestQueue mQueue ;
      String pid;
@@ -52,7 +54,8 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        showemail = (TextView) findViewById(R.id.email);
+        showid = (TextView) findViewById(R.id.pid);
 
         Intent intent = getIntent();
 
@@ -83,9 +86,13 @@ public class Profile extends AppCompatActivity
                         JSONObject patient = jsonArray.getJSONObject(0);
                         String fname = patient.getString("first_name");
                         String lname = patient.getString("last_name");
+                        String fullname = fname+lname ;
                         int id = patient.getInt("patient_id");
                         String email = patient.getString("email");
-                        name.setText(fname);
+                        name.setText(fullname);
+                        showid.setText(id);
+                        showemail.setText(email);
+
 
 
                 } catch (JSONException e) {
