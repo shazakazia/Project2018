@@ -38,19 +38,22 @@ public class loginScreen extends Activity {
         passwordedit = (EditText)findViewById(R.id.password);
         go_to_signup = (Button)findViewById(R.id.go_to_signup);
 
+
+          signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+
+            }
+        });
         go_to_signup.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
                 Intent i=new Intent(
                         loginScreen.this,
                         signUp.class);
+                i.putExtra("heyThere","hello!");
                 startActivity(i);
-            }
-        });
-          signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                userLogin();
 
             }
         });

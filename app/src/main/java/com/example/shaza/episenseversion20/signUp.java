@@ -58,8 +58,10 @@ public class signUp extends Activity {
         });  */
 
         Intent intent = getIntent();
+       // String message = intent.getStringExtra();
 
-         signUpbtn.setOnClickListener(new View.OnClickListener() {
+
+        signUpbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userSignUp();
