@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -58,6 +59,7 @@ public class Profile extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if(extras != null)
             pid = extras.getString("ID");
+        Toast.makeText(Profile.this, pid, Toast.LENGTH_LONG).show();
 
         name = (TextView) findViewById(R.id.name);
         buttontest = (Button) findViewById(R.id.buttontest);
@@ -79,10 +81,10 @@ public class Profile extends AppCompatActivity
                 try {
                     JSONArray jsonArray = response.getJSONArray("Patients");
                         JSONObject patient = jsonArray.getJSONObject(0);
-                        String fname = patient.getString("name");
-                        String lname = patient.getString("name");
-                        int id = patient.getInt("id");
-                        String email = patient.getString("name");
+                        String fname = patient.getString("first_name");
+                        String lname = patient.getString("last_name");
+                        int id = patient.getInt("patient_id");
+                        String email = patient.getString("email");
                         name.setText(fname);
 
 
