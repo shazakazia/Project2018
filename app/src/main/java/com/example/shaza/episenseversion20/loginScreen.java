@@ -27,7 +27,6 @@ public class loginScreen extends Activity {
 
     private final String key_email="email";
     private final String key_password="password";
-    private final String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class loginScreen extends Activity {
 
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
+         final String url = "http://10.0.2.2:3000/patients/login?email=" + email + "&patient_password=" + password;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
