@@ -39,7 +39,7 @@ public class signUp extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.activity_sign_up);
         signUpbtn=(Button)findViewById(R.id.signUpbtn);
         passwordedit = (EditText)findViewById(R.id.passwordinput);
         emailedit = (EditText)findViewById(R.id.emailinput);

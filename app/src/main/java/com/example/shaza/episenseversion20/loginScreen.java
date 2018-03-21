@@ -59,7 +59,7 @@ public class loginScreen extends Activity {
             }
         });
     }
-
+//hello
     private void userLogin(){
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
