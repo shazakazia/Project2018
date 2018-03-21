@@ -34,6 +34,7 @@ public class Profile extends AppCompatActivity
     //private TextView pid = (TextView) findViewById(R.id.pid);
     private Button buttontest ;
     private RequestQueue mQueue ;
+     String pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,13 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
         Intent intent = getIntent();
 
+        Bundle extras = intent.getExtras();
+        if(extras != null)
+            pid = extras.getString("ID");
 
         name = (TextView) findViewById(R.id.name);
         buttontest = (Button) findViewById(R.id.buttontest);
@@ -60,12 +66,12 @@ public class Profile extends AppCompatActivity
         buttontest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jsonParse();
+                jsonParse(pid);
             }
         });
     }
-    private void jsonParse(){
-        String url = "http://10.0.2.2:3000/records ";
+    private void jsonParse(String pid){
+        String url = "http://10.0.2.2:3000/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONObject>(){
             @Override
