@@ -55,8 +55,11 @@ public class signUp extends Activity {
                         Profile.class);
                 startActivity(i);
             }
-        });
-*/          signUpbtn.setOnClickListener(new View.OnClickListener() {
+        });  */
+
+        Intent intent = getIntent();
+
+         signUpbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userSignUp();
