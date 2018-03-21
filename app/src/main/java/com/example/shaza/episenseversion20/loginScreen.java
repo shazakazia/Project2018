@@ -92,4 +92,3 @@ public class loginScreen extends Activity {
         requestQueue.add(stringRequest);
     }
 }
-//second commit
