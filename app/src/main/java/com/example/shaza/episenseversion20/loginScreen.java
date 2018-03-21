@@ -64,18 +64,19 @@ public class loginScreen extends Activity {
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
          final String url = "http://10.0.2.2:3000/patients/login?email=" + email + "&patient_password=" + password;
-
+        final String id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
-                       if(response=="0")
+                       if(!response.equals("Forbidden"))
                        {
                            Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_LONG).show();
                            Intent i=new Intent(
                                    loginScreen.this,
                                    Profile.class);
+                           i.putExtra( "ID", response);
                            startActivity(i);
                        }
 
