@@ -72,14 +72,14 @@ public class Profile extends AppCompatActivity
                 public void onResponse(JSONObject response){
                 try {
                     JSONArray jsonArray = response.getJSONArray("Patients");
-                    for (int i = 0; i< jsonArray.length();i++)
-                    {
-                        JSONObject patient = jsonArray.getJSONObject(i);
-                        String fullname = patient.getString("name");
+                        JSONObject patient = jsonArray.getJSONObject(0);
+                        String fname = patient.getString("name");
+                        String lname = patient.getString("name");
                         int id = patient.getInt("id");
-                        name.setText(fullname);
+                        String email = patient.getString("name");
+                        name.setText(fname);
 
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
