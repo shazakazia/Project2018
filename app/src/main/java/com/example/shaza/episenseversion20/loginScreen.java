@@ -21,13 +21,11 @@ import java.util.Map;
 
 public class loginScreen extends Activity {
     private Button signin;
-    private EditText usernameedit;
-    private EditText passwordedit;
     private EditText emailedit;
+    private EditText passwordedit;
 
-    private final String key_username="username";
-    private final String key_password="password";
     private final String key_email="email";
+    private final String key_password="password";
     private final String url = "";
 
     @Override
@@ -35,9 +33,8 @@ public class loginScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         signin=(Button)findViewById(R.id.signin);
-        usernameedit = (EditText)findViewById(R.id.username);
-        passwordedit = (EditText)findViewById(R.id.password);
         emailedit = (EditText)findViewById(R.id.email);
+        passwordedit = (EditText)findViewById(R.id.password);
 /*
         signin.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -52,20 +49,29 @@ public class loginScreen extends Activity {
             @Override
             public void onClick(View view) {
                 userLogin();
+
             }
         });
     }
 
     private void userLogin(){
-        final String username = usernameedit.getText().toString().trim();
-        final String password = passwordedit.getText().toString().trim();
         final String email = emailedit.getText().toString().trim();
+        final String password = passwordedit.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
+                       if(response=="0")
+                       {
+                           Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_LONG).show();
+                           Intent i=new Intent(
+                                   loginScreen.this,
+                                   Profile.class);
+                           startActivity(i);
+                       }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -78,7 +84,6 @@ public class loginScreen extends Activity {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String,String>();
                 params.put(key_password,password);
-                params.put(key_username,username);
                 params.put(key_email,email);
                 return params;
             }
