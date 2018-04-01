@@ -70,7 +70,7 @@ public class Profile extends AppCompatActivity
 
         Bundle extras = intent.getExtras();
         if(extras != null)
-            pid = extras.getString("ID");
+            pid = extras.getString("Patient ID");
         Toast.makeText(Profile.this, pid, Toast.LENGTH_LONG).show();
 
 
@@ -159,11 +159,12 @@ public class Profile extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(Profile.this,Profile.class);
-                h.putExtra("ID",pid);
+                h.putExtra("Patient ID",pid);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(Profile.this,MedicalRec.class);
+                i.putExtra("Patient ID",pid);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
@@ -174,6 +175,7 @@ public class Profile extends AppCompatActivity
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(Profile.this,EContacts.class);
+                s.putExtra("Patient ID",pid);
                 startActivity(s);
 
         }
