@@ -34,7 +34,7 @@ public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name;
     private TextView showid ;
-    private TextView showemail ;
+   // private TextView showemail ;
     private Button buttontest ;
     private RequestQueue mQueue ;
      String pid;
@@ -54,7 +54,7 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        showemail = (TextView) findViewById(R.id.email);
+      //  showemail = (TextView) findViewById(R.id.email);
         showid = (TextView) findViewById(R.id.pid);
 
         Intent intent = getIntent();
@@ -87,12 +87,12 @@ public class Profile extends AppCompatActivity
                         String fname = patient.getString("first_name");
                         String lname = patient.getString("last_name");
                         String fullname = fname+lname ;
-                        int id = patient.getInt("patient_id");
+                        String id = patient.getString("patient_id");
                         String email = patient.getString("email");
 
                         name.setText(fullname);
                         showid.setText(id);
-                        showemail.setText(email);
+                        //showemail.setText(email);
 
 
 
