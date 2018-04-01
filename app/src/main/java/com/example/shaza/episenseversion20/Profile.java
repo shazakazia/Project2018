@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity
     private EditText showdob;
     private RequestQueue mQueue ;
     private String pid;
-
+    private String did;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +94,7 @@ public class Profile extends AppCompatActivity
                             String address = patient.getString("address");
                             String dob = patient.getString("date_of_birth");
                             String contactnum = patient.getString("contact_number");
+                            String did = patient.getString("doctor_id");
 
                             showname.setText(fullname);
                             showid.setText(id);
@@ -158,6 +159,7 @@ public class Profile extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(Profile.this,Profile.class);
+                h.putExtra("ID",pid);
                 startActivity(h);
                 break;
             case R.id.nav_records:
@@ -166,6 +168,8 @@ public class Profile extends AppCompatActivity
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(Profile.this,ConsultantInfo.class);
+                g.putExtra("Patient ID",pid);
+                g.putExtra("Doctor ID", did);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:

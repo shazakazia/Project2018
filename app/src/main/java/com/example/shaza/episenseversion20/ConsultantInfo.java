@@ -13,9 +13,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ConsultantInfo extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TextView showname;
+    private TextView showemail ;
+    private TextView showcontact;
+    private TextView showaddress;
+    private RequestQueue mQueue ;
+    private String pid;
+    private String did;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +57,57 @@ public class ConsultantInfo extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        showemail = findViewById(R.id.emaildoc);
+        showname = findViewById(R.id.docname);
+        showcontact = findViewById(R.id.doccon);
+        showaddress = findViewById(R.id.docadd);
+
+        Intent intent = getIntent();
+
+        Bundle extras = intent.getExtras();
+        if(extras != null)
+        { pid = extras.getString("Patient ID");
+            did = extras.getString("Doctor ID");}
+        Toast.makeText(ConsultantInfo.this, did, Toast.LENGTH_LONG).show();
+
+
+
+        mQueue = Volley.newRequestQueue(this);
+
+
+        String url = "http://10.0.2.2:3000/doctors/" + did;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+                                JSONArray jsonArray = response.getJSONArray("Doctors");
+                            JSONObject patient = jsonArray.getJSONObject(0);
+                            String fname = patient.getString("first_name");
+                            String lname = patient.getString("last_name");
+                            String fullname = "Dr."+ fname+" "+lname ;
+                            String email = patient.getString("email");
+                            String address = patient.getString("address");
+                            String contactnum = patient.getString("contact_number");
+
+                            showname.setText(fullname);
+                            showemail.setText(email);
+                            showcontact.setText(contactnum);
+                            showaddress.setText(address);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },new Response.ErrorListener(){
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
     }
 
     @Override

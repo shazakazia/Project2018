@@ -11,11 +11,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp">
+        android:layout_height="310dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/darkblue"
+            android:background="@color/lightblue"
             android:orientation="vertical">
             <ImageView
                 android:layout_marginTop="30dp"
@@ -31,19 +31,25 @@
                 android:textSize="20dp"
                 android:textColor="#fff"
                 android:text="Dr.Brooke"
+                android:id="@+id/docname"
                 android:textStyle="bold"/>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="#fff"
+                android:text="Specialist in" />
         </LinearLayout>
-        <android.support.v7.widget.CardView
+      <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="90dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="3">
+
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -51,101 +57,96 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Status"
+                            android:text="Consultation Hours:"
                             android:textSize="17sp"
                             android:textStyle="bold"
                             android:textColor="@color/grey" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Active"
+                            android:text="x-x (xam - xpm)"
                             android:textColor="@color/darkblue"
                             android:textStyle="bold"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xxx"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/grey" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xxx"
-                        android:textColor="@color/darkblue"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xyx"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/grey" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="xyx"
-                        android:textColor="@color/darkblue"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+      </android.support.v7.widget.CardView>
     </RelativeLayout>
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="2">
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
             android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Location:"
-                android:layout_marginLeft="15dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/grey"/>
-            <TextView
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:textAlignment="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2nd Floor Room 204\nIntensive Care Unit, Latifa Hospital.\n[E66] Dubai - Al Ain Road\n"
-                android:textColor="@color/darkblue"
-                android:textStyle="bold"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="200dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:src="@drawable/location1" />
+                android:text="Contact Info:"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"/>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TableRow android:weightSum="8">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="25dp"
+                        android:text="Contact No. "
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:textColor="@color/darkblue"
+                        android:id="@+id/doccon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="Default number"
+                        android:editable="false" />
+                </TableRow>
+                <TableRow android:weightSum="8"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="25dp"
+                        android:text="Email ID "
+                        android:textSize="15sp" />
+                    <TextView
+                        android:textColor="@color/darkblue"
+                        android:layout_weight="6"
+                        android:id="@+id/emaildoc"
+                        android:text="Default email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow android:weightSum="8"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="25dp"
+                        android:text="Location"
+                        android:textSize="15sp" />
+                    <TextView
+                        android:textColor="@color/darkblue"
+                        android:layout_weight="6"
+                        android:id="@+id/docadd"
+                        android:text="Default location "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
-
