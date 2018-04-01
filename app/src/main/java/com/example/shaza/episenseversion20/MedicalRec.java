@@ -70,7 +70,7 @@ public class MedicalRec extends AppCompatActivity
         mQueue = Volley.newRequestQueue(this);
 
 
-        String url = "http://10.0.2.2:3000/patients/" + pid;
+        String url = "http://10.0.2.2:3000/patients/" + pid+ "/history";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
