@@ -87,15 +87,15 @@ public class ConsultantInfo extends AppCompatActivity
                     public void onResponse(JSONObject response){
                         try {
                                 JSONArray jsonArray = response.getJSONArray("Doctors");
-                            JSONObject patient = jsonArray.getJSONObject(0);
-                            String fname = patient.getString("first_name");
-                            String lname = patient.getString("last_name");
+                            JSONObject doctor = jsonArray.getJSONObject(0);
+                            String fname = doctor.getString("first_name");
+                            String lname = doctor.getString("last_name");
                             String fullname = "Dr."+ fname+" "+lname ;
-                            String email = patient.getString("email");
-                            String address = patient.getString("address");
-                            String contactnum = patient.getString("contact_number");
-                            String special = patient.getString("specialization");
-                            String hours = patient.getString("consultation_hours");
+                            String email = doctor.getString("email");
+                            String address = doctor.getString("address");
+                            String contactnum = doctor.getString("contact_number");
+                            String special = doctor.getString("specialization");
+                            String hours = doctor.getString("consultation_hours");
                             showname.setText(fullname);
                             showemail.setText(email);
                             showcontact.setText(contactnum);

@@ -16,9 +16,26 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private ArrayList myRecs;
+    private RequestQueue mQueue ;
+    private String pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +53,48 @@ public class MedicalRec extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String[] myRecs = { "Sunday, 21.2.2018 ", "Monday, 9.2.2018", "Saturday, 3.2.2018", "Tuesday, 11.12.2017", "Sunday, 26.7.2017" };
-       ListView list = (ListView) findViewById(R.id.record_list) ;
+
+        myRecs = new ArrayList<String>();
+        ListView list = (ListView) findViewById(R.id.record_list) ;
+
+
+        Intent intent = getIntent();
+
+        Bundle extras = intent.getExtras();
+        if(extras != null)
+            pid = extras.getString("Patient ID");
+        Toast.makeText(MedicalRec.this, pid, Toast.LENGTH_LONG).show();
+
+
+
+        mQueue = Volley.newRequestQueue(this);
+
+
+        String url = "http://10.0.2.2:3000/patients/" + pid;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("Seizures");
+                            for(int i =0 ; i<jsonArray.length() ; i++)
+                            {
+                                JSONObject record = jsonArray.getJSONObject(i);
+                                myRecs.add(record);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },new Response.ErrorListener(){
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
 
         ListAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs);
        list.setAdapter(adapter);
@@ -76,13 +133,6 @@ public class MedicalRec extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void populateListview() {
-        String[] myRecs = { "Shaza", "Rabia", "Uroosa", "Alex", "Beschier" };
-        ListView list = (ListView) findViewById(R.id.record_list) ;
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MedicalRec.this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs);
-        list.setAdapter(adapter);
-    }*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
