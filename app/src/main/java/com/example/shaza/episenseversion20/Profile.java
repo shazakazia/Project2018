@@ -37,7 +37,7 @@ public class Profile extends AppCompatActivity
     private TextView showid ;
     private EditText showemail ;
     private Button buttontest ;
-    private EditText showcontact;
+    //private EditText showcontact;
     private RequestQueue mQueue ;
      String pid;
 
@@ -58,7 +58,7 @@ public class Profile extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         showemail = (EditText) findViewById(R.id.email);
         showid = (TextView) findViewById(R.id.pid);
-        showcontact = (EditText) findViewById(R.id.contactnum);
+       // showcontact = (EditText) findViewById(R.id.contactnum);
         Intent intent = getIntent();
 
         Bundle extras = intent.getExtras();
@@ -90,11 +90,11 @@ public class Profile extends AppCompatActivity
                         String lname = patient.getString("last_name");
                         String fullname = fname+lname ;
                         int id = patient.getInt("patient_id");
-                        String contact = patient.getString("contact_number");
+                      //  String contact = patient.getString("contact_number");
 
                         name.setText(fullname);
                         showid.setText(id);
-                        showcontact.setText(contact);
+                       // showcontact.setText(contact);
 
 
 
