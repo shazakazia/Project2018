@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private String[] myRecs;
+    private String[] myRecs={"default"};
     private RequestQueue mQueue ;
     private String pid;
     private String item;
@@ -67,7 +67,6 @@ public class MedicalRec extends AppCompatActivity
         Toast.makeText(MedicalRec.this, pid, Toast.LENGTH_LONG).show();
 
 
-
         mQueue = Volley.newRequestQueue(this);
 
 
@@ -78,15 +77,18 @@ public class MedicalRec extends AppCompatActivity
                     public void onResponse(JSONObject response){
                         try {
                             JSONArray jsonArray = response.getJSONArray("Seizures");
+                            Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
                             for(int i =0 ; i<jsonArray.length() ; i++)
                             {
-                                JSONObject record = jsonArray.getJSONObject(i);
-                                item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
-                                for(int j= 0 ; j<jsonArray.length() ; j++)
-                                {
-                                    myRecs[j]=item;
-                                }
-                            }
+                               JSONObject record = jsonArray.getJSONObject(i);
+                               item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
+                               Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
+
+                               for(int j= 0 ; j<jsonArray.length() ; j++)
+                               {
+                                   myRecs[j]=item;
+                               }
+                           }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
