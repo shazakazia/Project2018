@@ -36,9 +36,9 @@ public class Profile extends AppCompatActivity
     private TextView name;
     private TextView showid ;
     private EditText showemail ;
-    private Button buttontest ;
+   // private Button buttontest ;
     private RequestQueue mQueue ;
-     String pid;
+    private String pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,12 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
         showemail = (EditText) findViewById(R.id.email123);
         showid = (TextView) findViewById(R.id.pid);
+        name = (TextView) findViewById(R.id.name);
+       // buttontest = (Button) findViewById(R.id.buttontest);
 
         Intent intent = getIntent();
 
@@ -65,50 +69,51 @@ public class Profile extends AppCompatActivity
             pid = extras.getString("ID");
         Toast.makeText(Profile.this, pid, Toast.LENGTH_LONG).show();
 
-        name = (TextView) findViewById(R.id.name);
-        buttontest = (Button) findViewById(R.id.buttontest);
+
 
         mQueue = Volley.newRequestQueue(this);
-        buttontest.setOnClickListener(new View.OnClickListener() {
+
+     /*   buttontest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 jsonParse(pid);
             }
-        });
-    }
-    private void jsonParse(String pid){
+        });*/
+
         String url = "http://10.0.2.2:3000/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-            new Response.Listener<JSONObject>(){
-            @Override
-                public void onResponse(JSONObject response){
-                try {
-                    JSONArray jsonArray = response.getJSONArray("Patients");
-                        JSONObject patient = jsonArray.getJSONObject(0);
-                        String fname = patient.getString("first_name");
-                        String lname = patient.getString("last_name");
-                        String fullname = fname+lname ;
-                        String id = patient.getString("patient_id");
-                        String email = patient.getString("email");
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("Patients");
+                            JSONObject patient = jsonArray.getJSONObject(0);
+                            String fname = patient.getString("first_name");
+                            String lname = patient.getString("last_name");
+                            String fullname = fname+lname ;
+                            String id = patient.getString("patient_id");
+                            String email = patient.getString("email");
 
-                        name.setText(fullname);
-                        showid.setText(id);
-                        showemail.setText(email);
+                            name.setText(fullname);
+                            showid.setText(id);
+                            showemail.setText(email);
 
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },new Response.ErrorListener(){
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
             }
-            },new Response.ErrorListener(){
-                public void onErrorResponse(VolleyError error){
-                    error.printStackTrace();
-                }
         });
 
         mQueue.add(request);
     }
+//    private void jsonParse(String pid){
+//    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
