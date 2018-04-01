@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +35,9 @@ public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name;
     private TextView showid ;
-    private TextView showemail ;
+    private EditText showemail ;
     private Button buttontest ;
+    private EditText showcontact;
     private RequestQueue mQueue ;
      String pid;
 
@@ -54,9 +56,9 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        showemail = (TextView) findViewById(R.id.email);
+        showemail = (EditText) findViewById(R.id.email);
         showid = (TextView) findViewById(R.id.pid);
-
+        showcontact = (EditText) findViewById(R.id.contactnum);
         Intent intent = getIntent();
 
         Bundle extras = intent.getExtras();
@@ -88,10 +90,11 @@ public class Profile extends AppCompatActivity
                         String lname = patient.getString("last_name");
                         String fullname = fname+lname ;
                         int id = patient.getInt("patient_id");
-                        String email = patient.getString("email");
+                        String contact = patient.getString("contact_number");
+
                         name.setText(fullname);
                         showid.setText(id);
-                        showemail.setText(email);
+                        showcontact.setText(contact);
 
 
 
