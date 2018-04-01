@@ -33,9 +33,10 @@ import java.util.ArrayList;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ArrayList myRecs;
+    private String[] myRecs;
     private RequestQueue mQueue ;
     private String pid;
+    private String item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class MedicalRec extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        myRecs = new ArrayList<String>();
+
         ListView list = (ListView) findViewById(R.id.record_list) ;
 
 
@@ -80,9 +81,12 @@ public class MedicalRec extends AppCompatActivity
                             for(int i =0 ; i<jsonArray.length() ; i++)
                             {
                                 JSONObject record = jsonArray.getJSONObject(i);
-                                myRecs.add(record);
+                                item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
+                                for(int j= 0 ; j<jsonArray.length() ; j++)
+                                {
+                                    myRecs[j]=item;
+                                }
                             }
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
