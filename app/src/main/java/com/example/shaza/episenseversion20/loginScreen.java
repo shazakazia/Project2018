@@ -76,7 +76,7 @@ public class loginScreen extends Activity {
                            Intent i=new Intent(
                                    loginScreen.this,
                                    Profile.class);
-                           i.putExtra( "ID", response);
+                           i.putExtra( "Patient ID", response);
                            startActivity(i);
                        }
 

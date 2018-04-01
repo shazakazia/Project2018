@@ -97,7 +97,7 @@ public class Profile extends AppCompatActivity
                             String dob = patient.getString("date_of_birth");
                             String contactnum = patient.getString("contact_number");
                             did = patient.getString("doctor_id");
-                            String docname = patient.getString("doctor_name");
+                            String docname = "Dr. " + patient.getString("doctor_name");
 
                             showname.setText(fullname);
                             showid.setText(id);
