@@ -35,11 +35,11 @@ public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView name;
     private TextView showid ;
-    private EditText showemail ;
+    //private EditText showemail ;
     private Button buttontest ;
     //private EditText showcontact;
     private RequestQueue mQueue ;
-     String pid;
+    String pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class Profile extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        showemail = (EditText) findViewById(R.id.email);
+       // showemail = (EditText) findViewById(R.id.email);
         showid = (TextView) findViewById(R.id.pid);
        // showcontact = (EditText) findViewById(R.id.contactnum);
         Intent intent = getIntent();
