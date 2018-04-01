@@ -35,6 +35,8 @@ public class ConsultantInfo extends AppCompatActivity
     private TextView showemail ;
     private TextView showcontact;
     private TextView showaddress;
+    private TextView showspecial;
+    private TextView showhours;
     private RequestQueue mQueue ;
     private String pid;
     private String did;
@@ -62,6 +64,8 @@ public class ConsultantInfo extends AppCompatActivity
         showname = findViewById(R.id.docname);
         showcontact = findViewById(R.id.doccon);
         showaddress = findViewById(R.id.docadd);
+        showspecial = findViewById(R.id.special);
+        showhours = findViewById(R.id.hours);
 
         Intent intent = getIntent();
 
@@ -90,11 +94,14 @@ public class ConsultantInfo extends AppCompatActivity
                             String email = patient.getString("email");
                             String address = patient.getString("address");
                             String contactnum = patient.getString("contact_number");
-
+                            String special = patient.getString("specialization");
+                            String hours = patient.getString("consultation_hours");
                             showname.setText(fullname);
                             showemail.setText(email);
                             showcontact.setText(contactnum);
                             showaddress.setText(address);
+                            showhours.setText(hours);
+                            showspecial.setText(special);
 
 
                         } catch (JSONException e) {
