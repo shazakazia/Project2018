@@ -39,6 +39,7 @@ public class Profile extends AppCompatActivity
     private EditText showcontact;
     private EditText showaddress;
     private EditText showdob;
+    private TextView showdocname;
     private RequestQueue mQueue ;
     private String pid;
     private String did;
@@ -65,6 +66,7 @@ public class Profile extends AppCompatActivity
         showcontact = findViewById(R.id.contactnum);
         showaddress = findViewById(R.id.address);
         showdob = findViewById(R.id.dob);
+        showdocname = findViewById(R.id.dname);
 
         Intent intent = getIntent();
 
@@ -95,6 +97,7 @@ public class Profile extends AppCompatActivity
                             String dob = patient.getString("date_of_birth");
                             String contactnum = patient.getString("contact_number");
                             did = patient.getString("doctor_id");
+                            String docname = patient.getString("doctor_name");
 
                             showname.setText(fullname);
                             showid.setText(id);
@@ -102,6 +105,7 @@ public class Profile extends AppCompatActivity
                             showcontact.setText(contactnum);
                             showaddress.setText(address);
                             showdob.setText(dob);
+                            showdocname.setText(docname);
 
 
                         } catch (JSONException e) {
