@@ -33,10 +33,12 @@ import org.w3c.dom.Text;
 //testing .. integration
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private TextView name;
+    private TextView showname;
     private TextView showid ;
     private EditText showemail ;
-   // private Button buttontest ;
+    private EditText showcontact;
+    private EditText showaddress;
+    private EditText showdob;
     private RequestQueue mQueue ;
     private String pid;
 
@@ -59,8 +61,10 @@ public class Profile extends AppCompatActivity
 
         showemail = (EditText) findViewById(R.id.email123);
         showid = (TextView) findViewById(R.id.pid);
-        name = (TextView) findViewById(R.id.name);
-       // buttontest = (Button) findViewById(R.id.buttontest);
+        showname = (TextView) findViewById(R.id.name);
+        showcontact = findViewById(R.id.contactnum);
+        showaddress = findViewById(R.id.address);
+        showdob = findViewById(R.id.dob);
 
         Intent intent = getIntent();
 
@@ -73,12 +77,6 @@ public class Profile extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
 
-     /*   buttontest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jsonParse(pid);
-            }
-        });*/
 
         String url = "http://10.0.2.2:3000/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -90,14 +88,19 @@ public class Profile extends AppCompatActivity
                             JSONObject patient = jsonArray.getJSONObject(0);
                             String fname = patient.getString("first_name");
                             String lname = patient.getString("last_name");
-                            String fullname = fname+lname ;
+                            String fullname = fname+" "+lname ;
                             String id = patient.getString("patient_id");
                             String email = patient.getString("email");
+                            String address = patient.getString("address");
+                            String dob = patient.getString("date_of_birth");
+                            String contactnum = patient.getString("contact_number");
 
-                            name.setText(fullname);
+                            showname.setText(fullname);
                             showid.setText(id);
                             showemail.setText(email);
-
+                            showcontact.setText(contactnum);
+                            showaddress.setText(address);
+                            showdob.setText(dob);
 
 
                         } catch (JSONException e) {
@@ -112,8 +115,7 @@ public class Profile extends AppCompatActivity
 
         mQueue.add(request);
     }
-//    private void jsonParse(String pid){
-//    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
