@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private String[] myRecs={"default"};
+    private ArrayList<String>myRecs= new ArrayList<String>();
     private RequestQueue mQueue ;
     private String pid;
     private String item;
@@ -76,18 +77,21 @@ public class MedicalRec extends AppCompatActivity
                     @Override
                     public void onResponse(JSONObject response){
                         try {
+
                             JSONArray jsonArray = response.getJSONArray("Seizures");
-                            Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
-                            for(int i =0 ; i<jsonArray.length() ; i++)
+                           // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
+
+                            JSONObject record;
+                            for(int i =0 ; i<jsonArray.length(); i++)
                             {
-                               JSONObject record = jsonArray.getJSONObject(i);
+                                record = jsonArray.getJSONObject(i);
                                item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
                                Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
-                               for(int j= 0 ; j<jsonArray.length() ; j++)
-                               {
-                                   myRecs[j]=item;
-                               }
+                                myRecs.add(item);
+                                Log.d(item,"OUTPUT_ITEM");
+                                Log.d(myRecs.get(i), "OUTPUT_RECS");
+//                               }
                            }
 
                         } catch (JSONException e) {
@@ -102,8 +106,7 @@ public class MedicalRec extends AppCompatActivity
 
         mQueue.add(request);
 
-        ListAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs);
-       list.setAdapter(adapter);
+       list.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs));
        //populateListview();
     }
 
