@@ -2,6 +2,7 @@ package com.example.shaza.episenseversion20;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ArrayList<String>myRecs= new ArrayList<String>();
+    public static ArrayList<String> myRec;
     private RequestQueue mQueue ;
     private String pid;
     private String item;
@@ -57,7 +58,7 @@ public class MedicalRec extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        ListView list = (ListView) findViewById(R.id.record_list) ;
+        final ListView list = (ListView) findViewById(R.id.record_list) ;
 
 
         Intent intent = getIntent();
@@ -70,6 +71,7 @@ public class MedicalRec extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
 
+        myRec= new ArrayList<String>();
 
         String url = "http://10.0.2.2:3000/patients/" + pid+ "/history";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -88,11 +90,15 @@ public class MedicalRec extends AppCompatActivity
                                item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
                                Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
-                                myRecs.add(item);
-                                Log.d(item,"OUTPUT_ITEM");
-                                Log.d(myRecs.get(i), "OUTPUT_RECS");
-//                               }
+                                myRec.add(item);
+                                System.out.println("here");
+                                populate(myRec,list);
+                                System.out.println(myRec.size());
+                               // Log.d(item,"OUTPUT_ITEM");
+                                //Log.d(myRec.get(i), "OUTPUT_RECS");
+//
                            }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,10 +111,17 @@ public class MedicalRec extends AppCompatActivity
         });
 
         mQueue.add(request);
-
-       list.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs));
        //populateListview();
     }
+
+    public void populate(ArrayList<String> myRec, ListView list)
+    {
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRec);
+
+        list.setAdapter(myAdapter);
+    }
+
+
 
     @Override
     public void onBackPressed() {
