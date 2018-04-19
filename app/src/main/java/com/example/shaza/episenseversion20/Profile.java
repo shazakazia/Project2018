@@ -167,7 +167,7 @@ public class Profile extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        //// Handle navigation view item clicks here.
         //here is the main place where we need to work on.
         int id=item.getItemId();
         switch (id){
