@@ -73,7 +73,7 @@ public class MedicalRec extends AppCompatActivity
 
         myRec= new ArrayList<String>();
 
-        String url = "http://10.0.2.2:3000/patients/" + pid+ "/history";
+        String url = "http://10.0.2.2:3001/patients/" + pid+ "/history";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override

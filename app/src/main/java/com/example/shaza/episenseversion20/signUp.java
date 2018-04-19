@@ -75,7 +75,7 @@ public class signUp extends Activity {
         final String fname = firstnameedit.getText().toString().trim();
         final String lname = lastnameedit.getText().toString().trim();
         final String pid = patientidedit.getText().toString().trim();
-        final String url = "http://10.0.2.2:3000/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname;
+        final String url = "http://10.0.2.2:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

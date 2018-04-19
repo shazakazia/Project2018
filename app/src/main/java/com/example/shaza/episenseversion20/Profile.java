@@ -91,7 +91,7 @@ public class Profile extends AppCompatActivity
         mQueue = Volley.newRequestQueue(this);
 
 
-        String url = "http://10.0.2.2:3000/patients/" + pid;
+        String url = "http://10.0.2.2:3001/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override

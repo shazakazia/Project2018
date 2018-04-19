@@ -69,7 +69,7 @@ public class loginScreen extends Activity {
 
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
-         final String url = "http://10.0.2.2:3000/patients/login?email=" + email + "&patient_password=" + password;
+         final String url = "http://10.0.2.2:3001/patients/login?email=" + email + "&patient_password=" + password;
         final String id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
