@@ -16,9 +16,12 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private String pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,20 @@ public class EContacts extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         String[] myRecs = { "Shaza", "Rabia", "Uroosa", "Alex", "Beschier" };
         ListView list = (ListView) findViewById(R.id.contact_list) ;
+
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras != null)
+            pid = extras.getString("Patient ID");
+        Toast.makeText(EContacts.this, pid, Toast.LENGTH_LONG).show();
+
+
+        String url = "http://10.0.2.2:3000/patients/" + pid+ "/contacts";
+
 
         ListAdapter adapter = new CustomAdapter(this,myRecs);
         list.setAdapter(adapter);
@@ -92,18 +107,23 @@ public class EContacts extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(EContacts.this,Profile.class);
+                h.putExtra("Patient ID",pid);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(EContacts.this,MedicalRec.class);
+                i.putExtra("Patient ID",pid);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(EContacts.this,ConsultantInfo.class);
+                g.putExtra("Patient ID",pid);
+                //  g.putExtra("Doctor ID", did);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(EContacts.this,EContacts.class);
+                s.putExtra("Patient ID",pid);
                 startActivity(s);
 
         }

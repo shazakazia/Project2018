@@ -1,6 +1,7 @@
 package com.example.shaza.episenseversion20;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class loginScreen extends Activity {
     private Button signupbtn;
     private EditText emailedit;
     private EditText passwordedit;
+    private ProgressDialog progressDialog ;
 
     private final String key_email="email";
     private final String key_password="password";
@@ -32,15 +34,20 @@ public class loginScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+
+
         signin=(Button)findViewById(R.id.signin);
         emailedit = (EditText)findViewById(R.id.email);
         passwordedit = (EditText)findViewById(R.id.password);
         signupbtn = (Button)findViewById(R.id.go_to_signup);
+        progressDialog = new ProgressDialog(this) ;
 
 
           signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Logging in...");
+                progressDialog.show();
                 userLogin();
 
             }
@@ -58,7 +65,6 @@ public class loginScreen extends Activity {
             }
         });
     }
-//hello
     private void userLogin(){
 
         final String email = emailedit.getText().toString().trim();
@@ -69,7 +75,7 @@ public class loginScreen extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
                        if(!response.equals("Forbidden"))
                        {
                            Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_LONG).show();

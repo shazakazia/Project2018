@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="50dp">
 <LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -116,42 +118,50 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
 
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:text="Basic Info:"
+            android:textColor="@color/grey"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@color/grey"/>
+            android:textStyle="bold" />
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-           <TableRow android:weightSum="8">
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:paddingStart="25dp"
-                   android:text="Contact No. "
-                   android:textSize="15sp" />
 
-               <EditText
-                   android:id="@+id/contactnum"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="6"
-                   android:editable="false" />
-           </TableRow>
             <TableRow android:weightSum="8">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="25dp"
+                    android:text="Contact No. "
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/contactnum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:editable="false"
+                    android:textColorLink="@android:color/black" />
+            </TableRow>
+
+            <TableRow android:weightSum="8">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,13 +169,16 @@
                     android:paddingStart="25dp"
                     android:text="Email ID "
                     android:textSize="15sp" />
+
                 <EditText
-                    android:layout_weight="6"
                     android:id="@+id/email123"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6" />
             </TableRow>
+
             <TableRow android:weightSum="8">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -173,13 +186,16 @@
                     android:paddingStart="25dp"
                     android:text="Date of Birth "
                     android:textSize="15sp" />
+
                 <EditText
-                    android:layout_weight="6"
                     android:id="@+id/dob"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6" />
             </TableRow>
+
             <TableRow android:weightSum="8">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,28 +203,30 @@
                     android:paddingStart="25dp"
                     android:text="Address"
                     android:textSize="15sp" />
+
                 <EditText
-                    android:layout_weight="6"
                     android:id="@+id/address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6" />
             </TableRow>
+
             <TableRow>
-                 <Button
-                android:id="@+id/signin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:text="Update Details "
-                android:background="@color/red"
-                android:layout_gravity="center_horizontal"
-                />
+
+                <Button
+                    android:id="@+id/update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/red"
+                    android:text="Update Details " />
             </TableRow>
         </TableLayout>
 
     </LinearLayout>
-    <LinearLayout
+ <!--   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -224,12 +242,8 @@
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/grey"/>
-        <Button
-            android:id="@+id/buttontest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"></Button>
-      <!--  <TextView
+
+      &lt;!&ndash;  <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -239,8 +253,8 @@
             />
         <Switch
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />-->
-    </LinearLayout>
+            android:layout_height="wrap_content" />&ndash;&gt;
+    </LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

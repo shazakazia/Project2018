@@ -165,18 +165,23 @@ public class MedicalRec extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(MedicalRec.this,Profile.class);
+                h.putExtra("Patient ID",pid);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(MedicalRec.this,MedicalRec.class);
+                i.putExtra("Patient ID",pid);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(MedicalRec.this,ConsultantInfo.class);
+                g.putExtra("Patient ID",pid);
+              //  g.putExtra("Doctor ID", did);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(MedicalRec.this,EContacts.class);
+                s.putExtra("Patient ID",pid);
                 startActivity(s);
 
         }

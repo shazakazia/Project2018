@@ -40,6 +40,8 @@ public class Profile extends AppCompatActivity
     private EditText showaddress;
     private EditText showdob;
     private TextView showdocname;
+    private Button update;
+    private boolean updateable = false ;
     private RequestQueue mQueue ;
     private String pid;
     private String did;
@@ -59,7 +61,7 @@ public class Profile extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        update = (Button) findViewById(R.id.update);
         showemail = (EditText) findViewById(R.id.email123);
         showid = (TextView) findViewById(R.id.pid);
         showname = (TextView) findViewById(R.id.name);
@@ -67,6 +69,15 @@ public class Profile extends AppCompatActivity
         showaddress = findViewById(R.id.address);
         showdob = findViewById(R.id.dob);
         showdocname = findViewById(R.id.dname);
+
+        showdob.setEnabled(false);
+        showaddress.setEnabled(false);
+        showcontact.setEnabled(false);
+        showdob.setFocusable(false);
+        showaddress.setFocusable(false);
+        showcontact.setFocusable(false);
+        showemail.setEnabled(false);
+        showemail.setFocusable(false);
 
         Intent intent = getIntent();
 
@@ -188,6 +199,36 @@ public class Profile extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+   /* public void update(View v)
+    {
+        if(!updateable){
+            showdob.setEnabled(true);
+            showaddress.setEnabled(true);
+            showcontact.setEnabled(true);
+            showdob.setFocusable(true);
+            showaddress.setFocusable(true);
+            showcontact.setFocusable(true);
+            showdob.setFocusableInTouchMode(true);
+            showaddress.setFocusableInTouchMode(true);
+            showcontact.setFocusableInTouchMode(true);
+
+            Toast.makeText(this,"You can now edit your profile details",Toast.LENGTH_SHORT).show();
+
+            updateable=true;
+        } else {
+            showdob.setEnabled(false);
+            showaddress.setEnabled(false);
+            showcontact.setEnabled(false);
+            showdob.setFocusable(false);
+            showaddress.setFocusable(false);
+            showcontact.setFocusable(false);
+
+            // enter statements for writing to
+
+            updateable=false;
+        }
+    }*/
 }
 
 //potato
