@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -54,7 +55,7 @@ public class EContacts extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        final ListView list = (ListView) findViewById(R.id.record_list) ;
+        final ListView list = (ListView) findViewById(R.id.contact_list) ;
 
 
         Intent intent = getIntent();
@@ -84,14 +85,14 @@ public class EContacts extends AppCompatActivity
                             for(int i =0 ; i<jsonArray.length(); i++)
                             {
                                 record = jsonArray.getJSONObject(i);
-                                item = record.getString("first_name")+" , "+record.getString("last_name")+" , "+record.getString("contact_number");
+                                item = record.getString("first_name")+"  "+record.getString("last_name")+" \n "+record.getString("contact_number");
                                 Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
 
                                 myContacts.add(item);
                                 System.out.println("here");
                                 populate(myContacts,list);
-                                System.out.println(myContacts.size());
-                                // Log.d(item,"OUTPUT_ITEM");
+                               System.out.println(myContacts.size());
+                                 Log.d(item,"OUTPUT_ITEM");
                                 //Log.d(myRec.get(i), "OUTPUT_RECS");
 //
                             }
@@ -110,11 +111,10 @@ public class EContacts extends AppCompatActivity
         mQueue.add(request);
         //populateListview();
     }
-
+//
     public void populate(ArrayList<String> myContacts, ListView list)
     {
-        ListAdapter myAdapter = new CustomAdapter(this,myContacts);
-
+        ArrayAdapter<String> myAdapter = new CustomAdapter(this,myContacts);
         list.setAdapter(myAdapter);
     }
 

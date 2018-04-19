@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends ArrayAdapter<String> {
 
-    public CustomAdapter(@NonNull Context context, ArrayList<String> myRecs) {
-        super(context, R.layout.record_item, myRecs);
+    public CustomAdapter(@NonNull Context context, ArrayList<String> myContacts) {
+        super(context, R.layout.record_item, myContacts);
     }
 
     @NonNull
