@@ -12,12 +12,28 @@
         android:src="@drawable/contact_default"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>
-    <TextView
-        android:gravity=""
-        android:id="@+id/recordlabel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="default"
-        android:textSize="17dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity=""
+            android:id="@+id/namelabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:text="Emergency Contact"
+            android:textStyle="italic"
+            android:textSize="17dp"/>
+        <!--<TextView
+            android:gravity=""
+            android:id="@+id/numberlabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Number"
+            android:textSize="17dp"/>-->
+    </LinearLayout>
+
 </LinearLayout>
 

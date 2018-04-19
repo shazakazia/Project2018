@@ -45,7 +45,8 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textStyle="italic"
+                android:textColorHint="@color/lightgrey" />
 
         </LinearLayout>
         <LinearLayout
@@ -67,7 +68,8 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/lightgrey"
+                android:textStyle="italic"
                 android:backgroundTint="@color/white"/>
 
         </LinearLayout>
@@ -84,18 +86,24 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="100dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New user?"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:layout_margin="5dp"/>
         <Button
             android:id="@+id/go_to_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CLICK HERE!"/>
+            android:background="@null"
+            android:width="10dp"
+            android:height="30dp"
+            android:layout_margin="5dp"
+            android:text="CLICK HERE!"
+            />
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>

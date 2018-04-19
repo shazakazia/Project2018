@@ -18,10 +18,25 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static ArrayList<String> myContacts;
+    private RequestQueue mQueue ;
     private String pid;
+    private String item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +54,68 @@ public class EContacts extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String[] myRecs = { "Shaza", "Rabia", "Uroosa", "Alex", "Beschier" };
-        ListView list = (ListView) findViewById(R.id.contact_list) ;
+        final ListView list = (ListView) findViewById(R.id.record_list) ;
 
 
         Intent intent = getIntent();
+
         Bundle extras = intent.getExtras();
         if(extras != null)
             pid = extras.getString("Patient ID");
+
         Toast.makeText(EContacts.this, pid, Toast.LENGTH_LONG).show();
 
 
-        String url = "http://10.0.2.2:3000/patients/" + pid+ "/contacts";
+        mQueue = Volley.newRequestQueue(this);
+
+        myContacts= new ArrayList<String>();
+
+        String url = "http://10.0.2.2:3001/contacts/" + pid;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+
+                            JSONArray jsonArray = response.getJSONArray("Contacts");
+                            // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
+
+                            JSONObject record;
+                            for(int i =0 ; i<jsonArray.length(); i++)
+                            {
+                                record = jsonArray.getJSONObject(i);
+                                item = record.getString("first_name")+" , "+record.getString("last_name")+" , "+record.getString("contact_number");
+                                Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
+
+                                myContacts.add(item);
+                                System.out.println("here");
+                                populate(myContacts,list);
+                                System.out.println(myContacts.size());
+                                // Log.d(item,"OUTPUT_ITEM");
+                                //Log.d(myRec.get(i), "OUTPUT_RECS");
+//
+                            }
 
 
-        ListAdapter adapter = new CustomAdapter(this,myRecs);
-        list.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },new Response.ErrorListener(){
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
         //populateListview();
+    }
+
+    public void populate(ArrayList<String> myContacts, ListView list)
+    {
+        ListAdapter myAdapter = new CustomAdapter(this,myContacts);
+
+        list.setAdapter(myAdapter);
     }
 
     @Override

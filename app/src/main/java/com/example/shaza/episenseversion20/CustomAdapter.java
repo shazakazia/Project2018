@@ -40,3 +40,4 @@ public class CustomAdapter extends ArrayAdapter<String> {
         return customView ;
     }
 }
+//
