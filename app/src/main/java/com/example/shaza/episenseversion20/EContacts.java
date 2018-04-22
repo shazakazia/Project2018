@@ -132,7 +132,7 @@ public class EContacts extends AppCompatActivity
                                 contactlist.add(contact) ;
 
 
-                             //   populate(myContacts,list,myNumbers);
+                              populate(contactlist,list);
                                //System.out.println(myContacts.size());
                                 // Log.d(item,"OUTPUT_ITEM");
                                 //Log.d(myRec.get(i), "OUTPUT_RECS");
@@ -160,7 +160,7 @@ public class EContacts extends AppCompatActivity
     {
 
     }
-    public void populate(ArrayList<String> myContacts, ListView list,ArrayList<String> myNumbers)
+    public void populate(List<ContactTemplate> contactlist, ListView list)
     {
         CustomAdapter adapter = new CustomAdapter(this,contactlist);
         list.setAdapter(adapter) ;
