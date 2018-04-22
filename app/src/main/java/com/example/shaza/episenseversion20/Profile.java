@@ -35,6 +35,8 @@ public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView showname;
     private TextView showid ;
+    private TextView nav_user;
+    private TextView nav_mail;
     private EditText showemail ;
     private EditText showcontact;
     private EditText showaddress;
@@ -45,6 +47,8 @@ public class Profile extends AppCompatActivity
     private RequestQueue mQueue ;
     private String pid;
     private String did;
+    private String name;
+    private String pemail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,9 @@ public class Profile extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        nav_user = (TextView)hView.findViewById(R.id.nav_name);
+        nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
         update = (Button) findViewById(R.id.update);
@@ -84,7 +91,7 @@ public class Profile extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if(extras != null)
             pid = extras.getString("Patient ID");
-        Toast.makeText(Profile.this, pid, Toast.LENGTH_LONG).show();
+        Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
 
 
 
@@ -117,6 +124,12 @@ public class Profile extends AppCompatActivity
                             showaddress.setText(address);
                             showdob.setText(dob);
                             showdocname.setText(docname);
+
+
+                            name = showname.getText().toString() ;
+                            pemail= showemail.getText().toString() ;
+                            nav_user.setText(name);
+                            nav_mail.setText(pemail);
 
 
                         } catch (JSONException e) {
@@ -174,25 +187,43 @@ public class Profile extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(Profile.this,Profile.class);
+                h.putExtra("Doctor ID", did);
                 h.putExtra("Patient ID",pid);
+                h.putExtra("Patient name", name);
+                h.putExtra("Patient email", pemail);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(Profile.this,MedicalRec.class);
+                i.putExtra("Doctor ID", did);
                 i.putExtra("Patient ID",pid);
+                i.putExtra("Patient name", name);
+                i.putExtra("Patient email", pemail);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(Profile.this,ConsultantInfo.class);
                 g.putExtra("Patient ID",pid);
                 g.putExtra("Doctor ID", did);
+                g.putExtra("Patient name", name);
+                g.putExtra("Patient email", pemail);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(Profile.this,EContacts.class);
+                s.putExtra("Doctor ID", did);
                 s.putExtra("Patient ID",pid);
+                s.putExtra("Patient name", name);
+                s.putExtra("Patient email", pemail);
                 startActivity(s);
-
+                break;
+            case R.id.nav_logout:
+                Intent l = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(l);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

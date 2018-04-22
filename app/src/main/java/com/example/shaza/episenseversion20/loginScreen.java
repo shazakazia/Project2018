@@ -92,6 +92,7 @@ public class loginScreen extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
+                progressDialog.hide();
             }
         }){
             @Override

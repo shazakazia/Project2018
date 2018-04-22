@@ -37,9 +37,13 @@ public class ConsultantInfo extends AppCompatActivity
     private TextView showaddress;
     private TextView showspecial;
     private TextView showhours;
+    private TextView nav_user;
+    private TextView nav_mail;
     private RequestQueue mQueue ;
     private String pid;
     private String did;
+    private String name;
+    private String pemail;
 
 
     @Override
@@ -58,6 +62,9 @@ public class ConsultantInfo extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        nav_user = (TextView)hView.findViewById(R.id.nav_name);
+        nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
         showemail = findViewById(R.id.emaildoc);
@@ -72,10 +79,13 @@ public class ConsultantInfo extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if(extras != null)
         { pid = extras.getString("Patient ID");
-            did = extras.getString("Doctor ID");}
-        Toast.makeText(ConsultantInfo.this, did, Toast.LENGTH_LONG).show();
+            did = extras.getString("Doctor ID");
+            name = extras.getString("Patient name");
+            pemail = extras.getString("Patient email");}
+        //Toast.makeText(ConsultantInfo.this, did, Toast.LENGTH_LONG).show();
 
-
+        nav_user.setText(name);
+        nav_mail.setText(pemail);
 
         mQueue = Volley.newRequestQueue(this);
 
@@ -159,24 +169,43 @@ public class ConsultantInfo extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(ConsultantInfo.this,Profile.class);
+                h.putExtra("Doctor ID", did);
                 h.putExtra("Patient ID",pid);
+                h.putExtra("Patient name", name);
+                h.putExtra("Patient email", pemail);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(ConsultantInfo.this,MedicalRec.class);
+                i.putExtra("Doctor ID", did);
                 i.putExtra("Patient ID",pid);
+                i.putExtra("Patient name", name);
+                i.putExtra("Patient email", pemail);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(ConsultantInfo.this,ConsultantInfo.class);
                 g.putExtra("Patient ID",pid);
                 g.putExtra("Doctor ID", did);
+                g.putExtra("Patient name", name);
+                g.putExtra("Patient email", pemail);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(ConsultantInfo.this,EContacts.class);
+                s.putExtra("Doctor ID", did);
                 s.putExtra("Patient ID",pid);
+                s.putExtra("Patient name", name);
+                s.putExtra("Patient email", pemail);
                 startActivity(s);
+                break;
+            case R.id.nav_logout:
+                Intent l = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(l);
+                break;
 
         }
 

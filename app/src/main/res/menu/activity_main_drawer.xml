@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
             android:title="Profile" />
         <item
             android:id="@+id/nav_records"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_restore_page_black_24dp"
             android:title="Previous Records" />
         <item
             android:id="@+id/nav_consultant"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_local_hospital_black_24dp"
             android:title="Consultant Info" />
         <item
             android:id="@+id/nav_contacts"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_people_black_24dp"
             android:title="Emergency Contacts" />
         <!--<item
             android:id="@+id/nav_manage"
@@ -34,7 +34,7 @@
                 android:title="Privacy Policy" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>

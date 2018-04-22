@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,8 +38,14 @@ public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static ArrayList<String> myRec;
     private RequestQueue mQueue ;
+    private TextView nav_user;
+    private TextView nav_mail;
     private String pid;
     private String item;
+    private String did;
+    private String name;
+    private String pemail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,9 @@ public class MedicalRec extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        nav_user = (TextView)hView.findViewById(R.id.nav_name);
+        nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -65,9 +75,16 @@ public class MedicalRec extends AppCompatActivity
 
         Bundle extras = intent.getExtras();
         if(extras != null)
+        {
             pid = extras.getString("Patient ID");
-        Toast.makeText(MedicalRec.this, pid, Toast.LENGTH_LONG).show();
+            did = extras.getString("Doctor ID");
+            name = extras.getString("Patient name");
+            pemail = extras.getString("Patient email");
+            }
+        //Toast.makeText(MedicalRec.this, did, Toast.LENGTH_LONG).show();
 
+        nav_user.setText(name);
+        nav_mail.setText(pemail);
 
         mQueue = Volley.newRequestQueue(this);
 
@@ -165,24 +182,43 @@ public class MedicalRec extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(MedicalRec.this,Profile.class);
+                h.putExtra("Doctor ID", did);
                 h.putExtra("Patient ID",pid);
+                h.putExtra("Patient name", name);
+                h.putExtra("Patient email", pemail);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(MedicalRec.this,MedicalRec.class);
+                i.putExtra("Doctor ID", did);
                 i.putExtra("Patient ID",pid);
+                i.putExtra("Patient name", name);
+                i.putExtra("Patient email", pemail);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(MedicalRec.this,ConsultantInfo.class);
                 g.putExtra("Patient ID",pid);
-              //  g.putExtra("Doctor ID", did);
+                g.putExtra("Doctor ID", did);
+                g.putExtra("Patient name", name);
+                g.putExtra("Patient email", pemail);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(MedicalRec.this,EContacts.class);
+                s.putExtra("Doctor ID", did);
                 s.putExtra("Patient ID",pid);
+                s.putExtra("Patient name", name);
+                s.putExtra("Patient email", pemail);
                 startActivity(s);
+                break;
+            case R.id.nav_logout:
+                Intent l = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(l);
+                break;
 
         }
 

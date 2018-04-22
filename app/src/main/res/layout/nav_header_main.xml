@@ -17,19 +17,28 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/contact_default" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/nav_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold|italic"
+        android:textSize="15dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_gravity="center_horizontal"
         android:text="Patient XYZ"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nav_email"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="xyz_123@gmail.com" />
+        android:layout_gravity="center_horizontal"
+        android:textStyle="italic"
+        android:textSize="15dp"
+        android:layout_height="25dp"
+        android:text="xyz@gmail.com" />
 
 </LinearLayout>

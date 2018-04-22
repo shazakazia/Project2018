@@ -15,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,13 +33,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static ArrayList<String> myContacts;
+    FloatingActionButton Addbutton ;
     private RequestQueue mQueue ;
     private String pid;
-    private String item;
+    private String itemname;
+    private String itemnumber;
+    private String did;
+    private String name;
+    private String pemail;
+    private TextView nav_user;
+    private TextView nav_mail;
+
+    private String [] contactname ;
+    private String [] contactnums ;
+    private List<ContactTemplate> contactlist ;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +70,43 @@ public class EContacts extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        nav_user = (TextView)hView.findViewById(R.id.nav_name);
+        nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
         final ListView list = (ListView) findViewById(R.id.contact_list) ;
+        Addbutton = findViewById(R.id.addbutton) ;
+      ;
 
 
         Intent intent = getIntent();
 
         Bundle extras = intent.getExtras();
         if(extras != null)
-            pid = extras.getString("Patient ID");
+        { pid = extras.getString("Patient ID");
+            did = extras.getString("Doctor ID");
+            name = extras.getString("Patient name");
+            pemail = extras.getString("Patient email");}
 
-        Toast.makeText(EContacts.this, pid, Toast.LENGTH_LONG).show();
+        //Toast.makeText(EContacts.this, did, Toast.LENGTH_LONG).show();
 
+        nav_user.setText(name);
+        nav_mail.setText(pemail);
 
         mQueue = Volley.newRequestQueue(this);
 
-        myContacts= new ArrayList<String>();
+        Addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent x= new Intent(EContacts.this,Add_Contacts.class);
+                startActivity(x);
+
+            }
+        });
+       // myContacts= new ArrayList<String>();
+        contactlist = new ArrayList<ContactTemplate>() ;
+
 
         String url = "http://10.0.2.2:3001/contacts/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -85,17 +122,24 @@ public class EContacts extends AppCompatActivity
                             for(int i =0 ; i<jsonArray.length(); i++)
                             {
                                 record = jsonArray.getJSONObject(i);
-                                item = record.getString("first_name")+"  "+record.getString("last_name")+" \n "+record.getString("contact_number");
-                                Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
+                                itemname = record.getString("first_name")+"  "+record.getString("last_name") ;
+                                itemnumber = record.getString("contact_number");
 
-                                myContacts.add(item);
+                                ContactTemplate contact = new ContactTemplate(itemname,itemnumber) ;
+                               // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
+                               // myContacts.add(itemname);
                                 System.out.println("here");
-                                populate(myContacts,list);
-                               System.out.println(myContacts.size());
-                                 Log.d(item,"OUTPUT_ITEM");
+                                contactlist.add(contact) ;
+
+
+                             //   populate(myContacts,list,myNumbers);
+                               //System.out.println(myContacts.size());
+                                // Log.d(item,"OUTPUT_ITEM");
                                 //Log.d(myRec.get(i), "OUTPUT_RECS");
 //
                             }
+
+
 
 
                         } catch (JSONException e) {
@@ -111,11 +155,15 @@ public class EContacts extends AppCompatActivity
         mQueue.add(request);
         //populateListview();
     }
-//
-    public void populate(ArrayList<String> myContacts, ListView list)
+
+    public void addNew()
     {
-        ArrayAdapter<String> myAdapter = new CustomAdapter(this,myContacts);
-        list.setAdapter(myAdapter);
+
+    }
+    public void populate(ArrayList<String> myContacts, ListView list,ArrayList<String> myNumbers)
+    {
+        CustomAdapter adapter = new CustomAdapter(this,contactlist);
+        list.setAdapter(adapter) ;
     }
 
     @Override
@@ -150,13 +198,6 @@ public class EContacts extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /*private void populateListview() {
-        String[] myRecs = { "Shaza", "Rabia", "Uroosa", "Alex", "Beschier" };
-        ListView list = (ListView) findViewById(R.id.record_list) ;
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MedicalRec.this,android.R.layout.simple_list_item_1, android.R.id.text1, myRecs);
-        list.setAdapter(adapter);
-    }*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -167,24 +208,43 @@ public class EContacts extends AppCompatActivity
 
             case R.id.nav_profile:
                 Intent h= new Intent(EContacts.this,Profile.class);
+                h.putExtra("Doctor ID", did);
                 h.putExtra("Patient ID",pid);
+                h.putExtra("Patient name", name);
+                h.putExtra("Patient email", pemail);
                 startActivity(h);
                 break;
             case R.id.nav_records:
                 Intent i= new Intent(EContacts.this,MedicalRec.class);
+                i.putExtra("Doctor ID", did);
                 i.putExtra("Patient ID",pid);
+                i.putExtra("Patient name", name);
+                i.putExtra("Patient email", pemail);
                 startActivity(i);
                 break;
             case R.id.nav_consultant:
                 Intent g= new Intent(EContacts.this,ConsultantInfo.class);
                 g.putExtra("Patient ID",pid);
-                //  g.putExtra("Doctor ID", did);
+                g.putExtra("Doctor ID", did);
+                g.putExtra("Patient name", name);
+                g.putExtra("Patient email", pemail);
                 startActivity(g);
                 break;
             case R.id.nav_contacts:
                 Intent s= new Intent(EContacts.this,EContacts.class);
+                s.putExtra("Doctor ID", did);
                 s.putExtra("Patient ID",pid);
+                s.putExtra("Patient name", name);
+                s.putExtra("Patient email", pemail);
                 startActivity(s);
+                break;
+            case R.id.nav_logout:
+                Intent l = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                finish();
+                startActivity(l);
+                break;
 
         }
 

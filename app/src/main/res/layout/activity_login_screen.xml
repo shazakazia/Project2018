@@ -102,6 +102,8 @@
             android:width="10dp"
             android:height="30dp"
             android:layout_margin="5dp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/white"
             android:text="CLICK HERE!"
             />
         </LinearLayout>
