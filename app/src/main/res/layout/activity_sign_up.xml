@@ -80,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
                     android:ems="17"
                     android:hint="Doctor Email ID"
                     android:inputType="textPersonName"
@@ -91,8 +92,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
+                    android:textColor="@color/white"
                     android:ems="17"
-                    android:hint="Email ID"
+                    android:hint="Patient Email ID"
                     android:inputType="textEmailAddress"
                     android:textColorHint="@color/lightgrey"
                     android:textStyle="italic" />

@@ -77,7 +77,7 @@ public class EContacts extends AppCompatActivity
 
         final ListView list = (ListView) findViewById(R.id.contact_list) ;
         Addbutton = findViewById(R.id.addbutton) ;
-      ;
+
 
 
         Intent intent = getIntent();
@@ -96,14 +96,7 @@ public class EContacts extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
 
-        Addbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent x= new Intent(EContacts.this,Add_Contacts.class);
-                startActivity(x);
 
-            }
-        });
        // myContacts= new ArrayList<String>();
         contactlist = new ArrayList<ContactTemplate>() ;
 
@@ -139,7 +132,15 @@ public class EContacts extends AppCompatActivity
 //
                             }
 
+                            Addbutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent x= new Intent(EContacts.this,Add_Contacts.class);
+                                    x.putExtra("Patient ID",pid);
+                                    startActivity(x);
 
+                                }
+                            });
 
 
                         } catch (JSONException e) {

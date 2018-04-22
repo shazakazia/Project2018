@@ -45,19 +45,9 @@ public class signUp extends Activity {
         firstnameedit = (EditText)findViewById(R.id.first);
         lastnameedit = (EditText)findViewById(R.id.last);
         patientidedit = (EditText)findViewById(R.id.pidinput);
-/*
-        signin.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
 
-                Intent i=new Intent(
-                        loginScreen.this,
-                        Profile.class);
-                startActivity(i);
-            }
-        });  */
 
         Intent intent = getIntent();
-       // String message = intent.getStringExtra();
 
 
         signUpbtn.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +65,7 @@ public class signUp extends Activity {
         final String fname = firstnameedit.getText().toString().trim();
         final String lname = lastnameedit.getText().toString().trim();
         final String pid = patientidedit.getText().toString().trim();
-        final String url = "http://10.0.2.2:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname;
+        final String url = "http://10.0.2.2:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email" + lname;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
