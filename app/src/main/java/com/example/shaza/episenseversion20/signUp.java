@@ -28,12 +28,14 @@ public class signUp extends Activity {
     private EditText firstnameedit;
     private EditText lastnameedit;
     private EditText patientidedit;
+    private EditText doctoremailedit;
 
     private final String key_password="password";
     private final String key_email="email";
     private final String key_firstname="firstname";
     private final String key_lastname="lastname";
     private final String key_patientid="patientid";
+    private final String key_doctoremail="doctoremail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class signUp extends Activity {
         firstnameedit = (EditText)findViewById(R.id.first);
         lastnameedit = (EditText)findViewById(R.id.last);
         patientidedit = (EditText)findViewById(R.id.pidinput);
+        doctoremailedit = (EditText)findViewById(R.id.doctoremailinput);
 
 
         Intent intent = getIntent();
@@ -65,19 +68,17 @@ public class signUp extends Activity {
         final String fname = firstnameedit.getText().toString().trim();
         final String lname = lastnameedit.getText().toString().trim();
         final String pid = patientidedit.getText().toString().trim();
-        final String url = "http://10.0.2.2:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email" + lname;
+        final String dname = doctoremailedit.getText().toString().trim();
+        final String url = "http://10.0.2.2:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email" + dname;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(signUp.this, response, Toast.LENGTH_LONG).show();
-                        if(response=="OK")
+                        //Toast.makeText(signUp.this, response, Toast.LENGTH_LONG).show();
+                        if(response.equals("OK"))
                         {
-                            Intent i=new Intent(
-                                    signUp.this,
-                                    loginScreen.class);
-                            startActivity(i);
+                            finish() ;
                         }
                     }
                 },
@@ -95,6 +96,7 @@ public class signUp extends Activity {
                 params.put(key_firstname,fname);
                 params.put(key_lastname,lname);
                 params.put(key_patientid,pid);
+                params.put(key_doctoremail,dname);
                 return params;
             }
         };

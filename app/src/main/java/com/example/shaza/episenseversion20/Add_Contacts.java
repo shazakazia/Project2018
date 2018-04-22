@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +60,7 @@ public class Add_Contacts extends AppCompatActivity {
         final String lname = ecLname.getText().toString().trim();
         final String number = ecNumber.getText().toString().trim();
 
-        final String url = "http://10.0.2.2:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "contact_number" +number;
+        final String url = "http://10.0.2.2:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number" + number;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
