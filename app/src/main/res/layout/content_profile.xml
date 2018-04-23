@@ -156,8 +156,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:editable="false"
-                    android:textColorLink="@android:color/black" />
+                    android:textColor="@color/grey"
+                    android:backgroundTint="@color/lightblue"
+                    />
             </TableRow>
 
             <TableRow android:weightSum="8">
@@ -174,7 +175,9 @@
                     android:id="@+id/email123"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"
+                    android:textColor="@color/grey"
+                    android:backgroundTint="@color/lightblue"/>
             </TableRow>
 
             <TableRow android:weightSum="8">
@@ -185,13 +188,16 @@
                     android:layout_weight="1"
                     android:paddingStart="25dp"
                     android:text="Date of Birth "
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    />
 
                 <EditText
                     android:id="@+id/dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"
+                    android:textColor="@color/grey"
+                    android:backgroundTint="@color/lightblue"/>
             </TableRow>
 
             <TableRow android:weightSum="8">
@@ -208,7 +214,9 @@
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6" />
+                    android:layout_weight="6"
+                    android:textColor="@color/grey"
+                    android:backgroundTint="@color/lightblue"/>
             </TableRow>
 
             <TableRow>

@@ -30,6 +30,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
+
 //testing .. integration
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +46,7 @@ public class Profile extends AppCompatActivity
     private EditText showaddress;
     private EditText showdob;
     private TextView showdocname;
-    private Button update;
+    private Button updatebtn;
     private boolean updateable = false ;
     private RequestQueue mQueue ;
     private String pid;
@@ -68,7 +72,7 @@ public class Profile extends AppCompatActivity
         nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
-        update = (Button) findViewById(R.id.update);
+        updatebtn = (Button) findViewById(R.id.update);
         showemail = (EditText) findViewById(R.id.email123);
         showid = (TextView) findViewById(R.id.pid);
         showname = (TextView) findViewById(R.id.name);
@@ -93,8 +97,12 @@ public class Profile extends AppCompatActivity
             pid = extras.getString("Patient ID");
         Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
 
-
-
+        updatebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                update(view);
+            }
+        });
         mQueue = Volley.newRequestQueue(this);
 
 
@@ -143,6 +151,7 @@ public class Profile extends AppCompatActivity
         });
 
         mQueue.add(request);
+
     }
 
     @Override
@@ -231,7 +240,7 @@ public class Profile extends AppCompatActivity
         return true;
     }
 
-   /* public void update(View v)
+    public void update(View v)
     {
         if(!updateable){
             showdob.setEnabled(true);
@@ -243,10 +252,9 @@ public class Profile extends AppCompatActivity
             showdob.setFocusableInTouchMode(true);
             showaddress.setFocusableInTouchMode(true);
             showcontact.setFocusableInTouchMode(true);
-
             Toast.makeText(this,"You can now edit your profile details",Toast.LENGTH_SHORT).show();
-
             updateable=true;
+
         } else {
             showdob.setEnabled(false);
             showaddress.setEnabled(false);
@@ -255,11 +263,47 @@ public class Profile extends AppCompatActivity
             showaddress.setFocusable(false);
             showcontact.setFocusable(false);
 
-            // enter statements for writing to
 
+            final String key_address="address";
+            final String key_number="number";
+            final String key_dob="dob";
+            final String dob = showdob.getText().toString().trim();
+            final String address = showaddress.getText().toString().trim();
+            final String contact = showcontact.getText().toString().trim();
+
+            final String url = "http://10.0.2.2:3001/patients/patient_id?=" + pid + "&address=" + address + "&date_of_birth=" + dob + "&contact_number=" + contact;
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(signUp.this, response, Toast.LENGTH_LONG).show();
+                            if(response.equals("OK"))
+                            {
+                                finish() ;
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(Profile.this,error.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }){
+                @Override
+                protected Map<String,String> getParams(){
+                    Map<String,String> params = new HashMap<String,String>();
+                    params.put(key_address,address);
+                    params.put(key_number,contact);
+                    params.put(key_dob,dob);
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
             updateable=false;
         }
-    }*/
+    }
 }
 
 //potato
