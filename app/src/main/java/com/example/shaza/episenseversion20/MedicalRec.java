@@ -106,17 +106,17 @@ public class MedicalRec extends AppCompatActivity
                             {
                                 record = jsonArray.getJSONObject(i);
                                 test=record.getString("isSeizure");
-                                if(test.equals("0"))
+                                if(test.equals("1"))
                                 {
-                                    break;
-                                }
-                               item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
-                               Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
+                                    item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
+                                    Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
-                                myRec.add(item);
-                                System.out.println("here");
-                                populate(myRec,list);
-                                System.out.println(myRec.size());
+                                    myRec.add(item);
+                                    System.out.println("here");
+                                    populate(myRec,list);
+                                    System.out.println(myRec.size());
+                                }
+
                                // Log.d(item,"OUTPUT_ITEM");
                                 //Log.d(myRec.get(i), "OUTPUT_RECS");
 //
