@@ -271,7 +271,7 @@ public class Profile extends AppCompatActivity
             final String address = showaddress.getText().toString().trim();
             final String contact = showcontact.getText().toString().trim();
 
-            final String url = "http://10.0.2.2:3001/patients/patient_id?=" + pid + "&address=" + address + "&date_of_birth=" + dob + "&contact_number=" + contact;
+            final String url = "http://10.0.2.2:3001/patients/patient_id?" + "&address=" + address + "&date_of_birth=" + dob + "&contact_number=" + contact;
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
