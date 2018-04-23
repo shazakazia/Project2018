@@ -45,6 +45,7 @@ public class MedicalRec extends AppCompatActivity
     private String did;
     private String name;
     private String pemail;
+    private String test;
 
 
     @Override
@@ -104,6 +105,11 @@ public class MedicalRec extends AppCompatActivity
                             for(int i =0 ; i<jsonArray.length(); i++)
                             {
                                 record = jsonArray.getJSONObject(i);
+                                test=record.getString("isSeizure");
+                                if(test.equals("0"))
+                                {
+                                    break;
+                                }
                                item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
                                Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
