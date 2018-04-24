@@ -66,8 +66,8 @@ public class Add_Contacts extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
-                        if (response == "OK") {
+                       Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
+                       if (response.equals("OK") ) {
                             finish();
                         }
                     }
