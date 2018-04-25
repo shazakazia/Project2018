@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shaza.episenseversion20">
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -27,6 +35,10 @@
             android:name=".MedicalRec"
             android:label="@string/title_activity_medical_rec"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AppStatus"
+            android:label="@string/title_activity_appstatus"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".loginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +47,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".signUp" />
-        <activity android:name=".Add_Contacts"></activity>
+        <activity android:name=".Add_Contacts" />
+        <activity android:name=".MessageSystem" />
+
+        <service android:name=".BackgroundService" />
+
+        <receiver android:name=".AlarmReceiver" />
+        <activity android:name=".AlarmStop"></activity>
     </application>
 
 </manifest>

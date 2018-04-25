@@ -1,9 +1,12 @@
 package com.example.shaza.episenseversion20;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,6 +37,8 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.shaza.episenseversion20.AppStatus.myProfile;
+
 //testing .. integration
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +58,7 @@ public class Profile extends AppCompatActivity
     private String did;
     private String name;
     private String pemail;
+    private String check = "1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +78,10 @@ public class Profile extends AppCompatActivity
         nav_mail = (TextView)hView.findViewById(R.id.nav_email);
         navigationView.setNavigationItemSelectedListener(this);
 
-        updatebtn = (Button) findViewById(R.id.update);
-        showemail = (EditText) findViewById(R.id.email123);
-        showid = (TextView) findViewById(R.id.pid);
-        showname = (TextView) findViewById(R.id.name);
+        updatebtn = findViewById(R.id.update);
+        showemail = findViewById(R.id.email123);
+        showid = findViewById(R.id.pid);
+        showname =  findViewById(R.id.name);
         showcontact = findViewById(R.id.contactnum);
         showaddress = findViewById(R.id.address);
         showdob = findViewById(R.id.dob);
@@ -95,6 +101,7 @@ public class Profile extends AppCompatActivity
         Bundle extras = intent.getExtras();
         if(extras != null)
             pid = extras.getString("Patient ID");
+            did = extras.getString("Doctor ID");
         Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
@@ -103,54 +110,26 @@ public class Profile extends AppCompatActivity
                 update(view);
             }
         });
-        mQueue = Volley.newRequestQueue(this);
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
 
 
-        String url = "http://10.0.2.2:3001/patients/" + pid;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("Patients");
-                            JSONObject patient = jsonArray.getJSONObject(0);
-                            String fname = patient.getString("first_name");
-                            String lname = patient.getString("last_name");
-                            String fullname = fname+" "+lname ;
-                            String id = patient.getString("patient_id");
-                            String email = patient.getString("email");
-                            String address = patient.getString("address");
-                            String dob = patient.getString("date_of_birth");
-                            String contactnum = patient.getString("contact_number");
-                            did = patient.getString("doctor_id");
-                            String docname = "Dr. " + patient.getString("doctor_name");
 
-                            showname.setText(fullname);
-                            showid.setText(id);
-                            showemail.setText(email);
-                            showcontact.setText(contactnum);
-                            showaddress.setText(address);
-                            showdob.setText(dob);
-                            showdocname.setText(docname);
+                            showname.setText(myProfile.getFullname());
+                            showid.setText(myProfile.getId());
+                            showemail.setText(myProfile.getEmail());
+                            showcontact.setText(myProfile.getContactnum());
+                            showaddress.setText(myProfile.getAddress());
+                            showdob.setText(myProfile.getDob());
+                            showdocname.setText(myProfile.getDocname());
 
-
-                            name = showname.getText().toString() ;
-                            pemail= showemail.getText().toString() ;
+                            name = myProfile.getFullname();
+                            pemail= myProfile.getEmail() ;
                             nav_user.setText(name);
                             nav_mail.setText(pemail);
 
+                            Log.d("done","DONEEEE");
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },new Response.ErrorListener(){
-            public void onErrorResponse(VolleyError error){
-                error.printStackTrace();
-            }
-        });
-
-        mQueue.add(request);
 
     }
 
@@ -166,16 +145,12 @@ public class Profile extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.mainactivity, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -189,8 +164,6 @@ public class Profile extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        //// Handle navigation view item clicks here.
-        //here is the main place where we need to work on.
         int id=item.getItemId();
         switch (id){
 
@@ -304,6 +277,16 @@ public class Profile extends AppCompatActivity
             updateable=false;
         }
     }
+
+   // public void send message()
+//   {
+//
+//       if(check.toString().equals("1"))
+//       {
+//           Intent x = new Intent(Profile.this, MessageSystem.class);
+//           x.putExtra("name",fullname);
+//           x.putExtra("pid", id);
+//           startActivity(x); }
+//   }
 }
 
-//potato

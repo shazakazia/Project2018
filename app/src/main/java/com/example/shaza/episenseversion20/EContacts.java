@@ -89,7 +89,7 @@ public class EContacts extends AppCompatActivity
             name = extras.getString("Patient name");
             pemail = extras.getString("Patient email");}
 
-        //Toast.makeText(EContacts.this, did, Toast.LENGTH_LONG).show();
+        Toast.makeText(EContacts.this, did, Toast.LENGTH_LONG).show();
 
         nav_user.setText(name);
         nav_mail.setText(pemail);
@@ -100,8 +100,8 @@ public class EContacts extends AppCompatActivity
        // myContacts= new ArrayList<String>();
         contactlist = new ArrayList<ContactTemplate>() ;
 
-
-        String url = "http://10.0.2.2:3001/contacts/" + pid;
+        String url = "http://192.168.1.208:3001/contacts/" + pid;
+      //  String url = "http://10.0.2.2:3001/contacts/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -121,7 +121,7 @@ public class EContacts extends AppCompatActivity
                                 ContactTemplate contact = new ContactTemplate(itemname,itemnumber) ;
                                // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
                                // myContacts.add(itemname);
-                                System.out.println("here");
+                                //System.out.println("here");
                                 contactlist.add(contact) ;
 
 

@@ -90,8 +90,10 @@ public class MedicalRec extends AppCompatActivity
         mQueue = Volley.newRequestQueue(this);
 
         myRec= new ArrayList<String>();
+        //String url = "http://172.28.19.149:3001/patients/" + pid+ "/history";
+       // String url = "http://10.0.2.2:3001/patients/" + pid+ "/history";
+        String url = "http://192.168.1.208:3001/patients/" + pid+ "/history";
 
-        String url = "http://10.0.2.2:3001/patients/" + pid+ "/history";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -108,13 +110,13 @@ public class MedicalRec extends AppCompatActivity
                                 test=record.getString("isSeizure");
                                 if(test.equals("1"))
                                 {
-                                    item = record.getString("day")+" , "+record.getString("date")+" , "+record.getString("time");
-                                    Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
+                                    item = record.getString("timestamp")+" , "+record.getString("date");
+                                    //Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
                                     myRec.add(item);
-                                    System.out.println("here");
+                                   // System.out.println("here");
                                     populate(myRec,list);
-                                    System.out.println(myRec.size());
+                                   // System.out.println(myRec.size());
                                 }
 
                                // Log.d(item,"OUTPUT_ITEM");

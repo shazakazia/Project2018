@@ -10,4 +10,5 @@
     <string name="title_activity_medical_rec">Seizure History</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_appstatus">App Status</string>
 </resources>

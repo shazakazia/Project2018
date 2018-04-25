@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.shaza.episenseversion20.AlarmStop"
+    android:background="@color/lightgrey"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seizure detected !"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:paddingTop="50dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_margin="25dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="This Alarm is to notify that your headset device has detected fluctuations in vitals leading to an epileptic seizure. If the patient at risk has been attented to, then you may switch off this alarm. "/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stopb"
+        android:text="STOP"
+        android:background="@color/red"/>
+</LinearLayout>

@@ -69,7 +69,10 @@ public class loginScreen extends Activity {
 
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
-         final String url = "http://10.0.2.2:3001/patients/login?email=" + email + "&patient_password=" + password;
+       // final String url = "http://172.28.19.149:3001/patients/login?email=" + email + "&patient_password=" + password;
+       // final String url = "http://10.0.2.2:3001/patients/login?email=" + email + "&patient_password=" + password;
+        final String url = "http://192.168.1.208:3001/patients/login?email=" + email + "&patient_password=" + password;
+
         final String id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -81,7 +84,7 @@ public class loginScreen extends Activity {
                            Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_LONG).show();
                            Intent i=new Intent(
                                    loginScreen.this,
-                                   Profile.class);
+                                   AppStatus.class);
                            i.putExtra( "Patient ID", response);
                            startActivity(i);
                        }
@@ -92,6 +95,7 @@ public class loginScreen extends Activity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
+                error.printStackTrace();
                 progressDialog.hide();
             }
         }){
