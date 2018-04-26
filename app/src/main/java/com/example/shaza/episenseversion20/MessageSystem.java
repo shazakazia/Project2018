@@ -45,21 +45,11 @@ public class MessageSystem extends AppCompatActivity {
             name = extras.getString("Patient name");
         }
 
-        txt = "HELLO MY NAME IS " + name + "PLEASE HELP ME I'M HAVING A SEIZURE!! Aaaaaaaaaaaaaaaaaaaaaah" ;
+        txt = "EPISENSE: SEIZURE ALERT! \n" + " Patient name : " + name  ;
         phonenum = "+971561487886;";
-
         sendMessage(phonenum,txt);
         finish();
-//        send.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String phonenum  = phone.getText().toString() ;
-//                String mymessage  = message.getText().toString() ;
-//
-//                sendMessage(phonenum,mymessage);
-//
-//            }
-//        });
+
     }
 
     public void sendMessage(String phonenum , String mymessage)

@@ -39,7 +39,6 @@ import java.util.Map;
 
 import static com.example.shaza.episenseversion20.AppStatus.myProfile;
 
-//testing .. integration
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView showname;
@@ -253,6 +252,9 @@ public class Profile extends AppCompatActivity
                             //Toast.makeText(signUp.this, response, Toast.LENGTH_LONG).show();
                             if(response.equals("OK"))
                             {
+                                myProfile.setAddress(address);
+                                myProfile.setContactnum(contact);
+                                myProfile.setDob(dob);
                                 finish() ;
                             }
                         }

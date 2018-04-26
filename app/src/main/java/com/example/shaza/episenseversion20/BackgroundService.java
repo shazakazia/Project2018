@@ -58,8 +58,7 @@ public class BackgroundService extends Service {
 
             mQueue = Volley.newRequestQueue(BackgroundService.this);
            // final String url = "http://10.0.2.2:3001/patients/2/numberofseizures";
-           // final String url = "http://172.28.19.149:3001/patients/2/numberofseizures";
-            final String url = "http://192.168.1.208:3001/patients/2/numberofseizures";
+            final String url = "http://172.28.16.49:3001/patients/2/numberofseizures";
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>(){
@@ -71,7 +70,7 @@ public class BackgroundService extends Service {
                                 currentrecords = Integer.parseInt( patient.getString("numberOfSeizures"));
 
                                 Log.d("done",patient.getString("numberOfSeizures"));
-                                if(AppStatus.records<currentrecords)
+                                if(9<currentrecords)
                                 {
                                     Log.d("here", "hereeeeeeeeee") ;
                                     AppStatus.records=currentrecords ;
@@ -118,7 +117,7 @@ public class BackgroundService extends Service {
     {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_menu_camera);
+        builder.setSmallIcon(R.drawable.ic_error_outline_black_24dp);
         builder.setAutoCancel(true);
         builder.setContentTitle("Alarm ALert");
         builder.setContentText("Seizure Alarm alert. Touch OK to stop alarm");

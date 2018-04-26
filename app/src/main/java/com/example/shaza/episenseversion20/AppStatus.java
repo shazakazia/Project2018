@@ -183,9 +183,8 @@ public class AppStatus extends AppCompatActivity
     public void getUser() {
 
        // String url = "http://10.0.2.2:3001/patients/" + pid;
-        String url = "http://192.168.1.208:3001/patients/" + pid;
 
-        // String url = "http://172.28.19.149:3001/patients/" + pid;
+        String url = "http://172.28.16.49:3001/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
