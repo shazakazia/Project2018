@@ -69,8 +69,10 @@ public class loginScreen extends Activity {
 
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
-        final String url = "http://172.28.16.49:3001/patients/login?email=" + email + "&patient_password=" + password;
-       // final String url = "http://10.0.2.2:3001/patients/login?email=" + email + "&patient_password=" + password;
+        final String url = "http://192.168.1.187:3001/patients/login?email=" + email + "&patient_password=" + password;
+     //   final String url = "http://172.28.19.61:3001/patients/login?email=" + email + "&patient_password=" + password;
+
+
 
         final String id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -80,7 +82,7 @@ public class loginScreen extends Activity {
                        // Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
                        if(!response.equals("Forbidden"))
                        {
-                           Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_LONG).show();
+                           Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_SHORT).show();
                            Intent i=new Intent(
                                    loginScreen.this,
                                    AppStatus.class);
@@ -88,12 +90,17 @@ public class loginScreen extends Activity {
                            startActivity(i);
                        }
 
+
+
                     }
                 },
                 new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
+               if(error.toString().equals("com.android.volley.AuthFailureError"))
+                   Toast.makeText(loginScreen.this, "User does not exist", Toast.LENGTH_LONG).show();
+               else
+                   Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
                 error.printStackTrace();
                 progressDialog.hide();
             }

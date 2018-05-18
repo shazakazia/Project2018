@@ -60,8 +60,8 @@ public class Add_Contacts extends AppCompatActivity {
         final String lname = ecLname.getText().toString().trim();
         final String number = ecNumber.getText().toString().trim();
 
-       // final String url = "http://10.0.2.2:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
-        final String url = "http://172.28.16.49:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
+        final String url = "http://10.0.2.2:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
+       // final String url = "http://172.28.19.61:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

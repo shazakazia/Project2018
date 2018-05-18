@@ -89,8 +89,8 @@ public class ConsultantInfo extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
 
-        String url = "http://172.28.16.49:3001/doctors/" + did;
-       // String url = "http://10.0.2.2:3001/doctors/" + did;
+        String url = "http://192.168.1.187:3001/doctors/" + did;
+       // String url = "http://172.28.19.61:3001/doctors/" + did;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override

@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.shaza.episenseversion20.AppStatus.myProfile;
+import static com.example.shaza.episenseversion20.AppStatus.records;
 
 public class BackgroundService extends Service {
 
@@ -57,8 +58,8 @@ public class BackgroundService extends Service {
             System.out.println("SERVICE IS RUNNING");
 
             mQueue = Volley.newRequestQueue(BackgroundService.this);
-           // final String url = "http://10.0.2.2:3001/patients/2/numberofseizures";
-            final String url = "http://172.28.16.49:3001/patients/2/numberofseizures";
+           // final String url = "http://172.28.19.61:3001/patients/2/numberofseizures";
+             final String url = "http://192.168.1.187:3001/patients/2/numberofseizures";
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>(){
@@ -70,7 +71,7 @@ public class BackgroundService extends Service {
                                 currentrecords = Integer.parseInt( patient.getString("numberOfSeizures"));
 
                                 Log.d("done",patient.getString("numberOfSeizures"));
-                                if(9<currentrecords)
+                                if(records<currentrecords)
                                 {
                                     Log.d("here", "hereeeeeeeeee") ;
                                     AppStatus.records=currentrecords ;

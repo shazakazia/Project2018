@@ -100,8 +100,8 @@ public class EContacts extends AppCompatActivity
        // myContacts= new ArrayList<String>();
         contactlist = new ArrayList<ContactTemplate>() ;
 
-        String url = "http://172.28.16.49:3001/contacts/" + pid;
-      // String url = "http://10.0.2.2:3001/contacts/" + pid;
+        String url = "http://192.168.1.187:3001/contacts/" + pid;
+      //String url = "http://172.28.19.61:3001/contacts/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override

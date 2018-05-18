@@ -165,7 +165,6 @@ public class Profile extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id=item.getItemId();
         switch (id){
-
             case R.id.nav_profile:
                 Intent h= new Intent(Profile.this,Profile.class);
                 h.putExtra("Doctor ID", did);

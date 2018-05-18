@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -36,6 +37,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +58,8 @@ public class AppStatus extends AppCompatActivity
     public static ProfileTemplate myProfile ;
     private RequestQueue mQueue ;
     private Context context;
+
+    private Handler mHandler = new Handler();
 
 
     @Override
@@ -75,7 +82,7 @@ public class AppStatus extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
-
+        //getLocalIpAddress()
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras != null)
@@ -92,10 +99,19 @@ public class AppStatus extends AppCompatActivity
             Log.d("heree","HERE2");
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 0, alarm, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 3000, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
         }
 
-
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                Intent h= new Intent(AppStatus.this,Profile.class);
+                h.putExtra("Doctor ID", did);
+                h.putExtra("Patient ID",pid);
+                h.putExtra("Patient name", name);
+                h.putExtra("Patient email", pemail);
+                startActivity(h);
+            }
+        }, 5000);
 
     }
 
@@ -182,9 +198,9 @@ public class AppStatus extends AppCompatActivity
 
     public void getUser() {
 
-       // String url = "http://10.0.2.2:3001/patients/" + pid;
+       //String url = "http://172.28.19.61:3001/patients/" + pid;
 
-        String url = "http://172.28.16.49:3001/patients/" + pid;
+        String url = "http://192.168.1.187:3001/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -238,7 +254,35 @@ public class AppStatus extends AppCompatActivity
 //           startActivity(x); }
 //   }
 
+    public String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf
+                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    System.out.println("ip1--:" + inetAddress);
+                    System.out.println("ip2--:" + inetAddress.getHostAddress());
 
+                    // for getting IPV4 format
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address){
+
+                        String ip = inetAddress.getHostAddress().toString();
+                        System.out.println("ip---::" + ip);
+                        Toast.makeText(AppStatus.this, ip, Toast.LENGTH_LONG).show();
+//                        TextView mytxtTextView = findViewById(R.id.mytext);
+//                        mytxtTextView.setText(ip);
+                        // return inetAddress.getHostAddress().toString();
+                        return ip;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Log.e("IP Address", ex.toString());
+        }
+        return null;
+    }
 
 }
 

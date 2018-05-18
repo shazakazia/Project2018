@@ -53,7 +53,7 @@ public class MedicalRec extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_rec);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Previous Records");
+        toolbar.setTitle("Seizure History");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,15 +90,14 @@ public class MedicalRec extends AppCompatActivity
         mQueue = Volley.newRequestQueue(this);
 
         myRec= new ArrayList<String>();
-        String url = "http://172.28.16.49:3001/patients/" + pid+ "/history";
-       // String url = "http://10.0.2.2:3001/patients/" + pid+ "/history";
+        String url = "http://192.168.1.187:3001/patients/" + pid+ "/history";
+       // String url = "http://172.28.19.61:3001/patients/" + pid+ "/history";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
                         try {
-
                             JSONArray jsonArray = response.getJSONArray("Seizures");
                            // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
 
@@ -141,7 +140,6 @@ public class MedicalRec extends AppCompatActivity
     public void populate(ArrayList<String> myRec, ListView list)
     {
         ArrayAdapter<String> myAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRec);
-
         list.setAdapter(myAdapter);
     }
 
