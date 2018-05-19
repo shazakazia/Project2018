@@ -15,33 +15,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/lightblue"
+            android:background="@drawable/side_nav_bar"
             android:orientation="vertical">
-            <ImageView
-                android:layout_marginTop="30dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/propic" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/doctor"/>
+            <!--<ImageView-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="25dp"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="150dp"-->
+                <!--android:src="@drawable/doctor" -->
+               <!--/>-->
+
             <TextView
-                android:layout_marginTop="5dp"
+
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textColor="#fff"
-                android:text="Dr.Brooke"
+                android:text="Dr. Name"
                 android:id="@+id/docname"
                 android:textStyle="bold"/>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="#fff"
-                android:text="Specialist in"
-                android:id="@+id/special"/>
+
         </LinearLayout>
       <android.support.v7.widget.CardView
             android:layout_width="300dp"
@@ -52,9 +53,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:weightSum="2"
                     android:orientation="vertical"
                     android:gravity="center">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/darkblue"
+                        android:text="Specialist in"
+                        android:id="@+id/special"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -69,6 +80,7 @@
                             android:text="x-x (xam - xpm)"
                             android:textColor="@color/darkblue"
                             android:textStyle="bold"/>
+
                 </LinearLayout>
       </android.support.v7.widget.CardView>
     </RelativeLayout>

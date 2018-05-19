@@ -33,10 +33,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public static ArrayList<String> myRec;
+   // public static ArrayList<String> myRec;
     private RequestQueue mQueue ;
     private TextView nav_user;
     private TextView nav_mail;
@@ -47,6 +48,10 @@ public class MedicalRec extends AppCompatActivity
     private String pemail;
     private String test;
 
+    private String itemdate;
+    private String itemtime;
+
+    private List<RecordsTemplate> recordlist ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +93,9 @@ public class MedicalRec extends AppCompatActivity
         nav_mail.setText(pemail);
 
         mQueue = Volley.newRequestQueue(this);
-
-        myRec= new ArrayList<String>();
+        recordlist = new ArrayList<RecordsTemplate>() ;
         String url = "http://192.168.1.187:3001/patients/" + pid+ "/history";
-       // String url = "http://172.28.19.61:3001/patients/" + pid+ "/history";
+        //String url = "http://172.28.16.92:3001/patients/" + pid+ "/history";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
@@ -105,17 +109,19 @@ public class MedicalRec extends AppCompatActivity
                             for(int i =0 ; i<jsonArray.length(); i++)
                             {
                                 record = jsonArray.getJSONObject(i);
-                                test=record.getString("isSeizure");
-                                if(test.equals("1"))
-                                {
-                                    item = record.getString("timestamp")+" , "+record.getString("date");
+
+                                    itemtime = "Time: " + record.getString("timestamp");
+                                    itemdate = "Date: " +record.getString("date");
+
+                                    RecordsTemplate newrecord = new RecordsTemplate(itemdate,itemtime) ;
+
                                     //Toast.makeText(MedicalRec.this, item, Toast.LENGTH_LONG).show();
 
-                                    myRec.add(item);
+                                    recordlist.add(newrecord);
                                    // System.out.println("here");
-                                    populate(myRec,list);
+                                    populate(recordlist,list);
                                    // System.out.println(myRec.size());
-                                }
+                                //}
 
                                // Log.d(item,"OUTPUT_ITEM");
                                 //Log.d(myRec.get(i), "OUTPUT_RECS");
@@ -137,10 +143,10 @@ public class MedicalRec extends AppCompatActivity
        //populateListview();
     }
 
-    public void populate(ArrayList<String> myRec, ListView list)
+    public void populate(List<RecordsTemplate> recordlist, ListView list)
     {
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, android.R.id.text1, myRec);
-        list.setAdapter(myAdapter);
+        CustomAdapter2 adapter = new CustomAdapter2(this,recordlist);
+        list.setAdapter(adapter) ;
     }
 
 
@@ -180,8 +186,7 @@ public class MedicalRec extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        //here is the main place where we need to work on.
+
         int id=item.getItemId();
         switch (id){
 

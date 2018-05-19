@@ -3,7 +3,6 @@ package com.example.shaza.episenseversion20;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -70,7 +69,7 @@ public class loginScreen extends Activity {
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
         final String url = "http://192.168.1.187:3001/patients/login?email=" + email + "&patient_password=" + password;
-     //   final String url = "http://172.28.19.61:3001/patients/login?email=" + email + "&patient_password=" + password;
+       //final String url = "http://172.28.16.92:3001/patients/login?email=" + email + "&patient_password=" + password;
 
 
 
@@ -82,12 +81,15 @@ public class loginScreen extends Activity {
                        // Toast.makeText(loginScreen.this, response, Toast.LENGTH_LONG).show();
                        if(!response.equals("Forbidden"))
                        {
-                           Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_SHORT).show();
+                           //Toast.makeText(loginScreen.this, "User Authenticated", Toast.LENGTH_SHORT).show();
                            Intent i=new Intent(
                                    loginScreen.this,
                                    AppStatus.class);
                            i.putExtra( "Patient ID", response);
+
                            startActivity(i);
+
+                           progressDialog.dismiss();
                        }
 
 
@@ -99,6 +101,8 @@ public class loginScreen extends Activity {
             public void onErrorResponse(VolleyError error) {
                if(error.toString().equals("com.android.volley.AuthFailureError"))
                    Toast.makeText(loginScreen.this, "User does not exist", Toast.LENGTH_LONG).show();
+               else if(error.toString().equals("com.android.volley.NoConnectionError: java.net.ConnectException: Network is unreachable"))
+                        Toast.makeText(loginScreen.this,"Connection Error",Toast.LENGTH_LONG).show();
                else
                    Toast.makeText(loginScreen.this,error.toString(),Toast.LENGTH_LONG).show();
                 error.printStackTrace();

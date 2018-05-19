@@ -3,7 +3,6 @@ package com.example.shaza.episenseversion20;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +27,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -41,8 +37,6 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 //testing .. integration
 public class AppStatus extends AppCompatActivity
@@ -198,7 +192,7 @@ public class AppStatus extends AppCompatActivity
 
     public void getUser() {
 
-       //String url = "http://172.28.19.61:3001/patients/" + pid;
+        //String url = "http://172.28.19.61:3001/patients/" + pid;
 
         String url = "http://192.168.1.187:3001/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,

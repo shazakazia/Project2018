@@ -37,7 +37,7 @@ import java.util.List;
 
 public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public static ArrayList<String> myContacts;
+    //public static ArrayList<String> myContacts;
     FloatingActionButton Addbutton ;
     private RequestQueue mQueue ;
     private String pid;
@@ -49,8 +49,6 @@ public class EContacts extends AppCompatActivity
     private TextView nav_user;
     private TextView nav_mail;
 
-    private String [] contactname ;
-    private String [] contactnums ;
     private List<ContactTemplate> contactlist ;
 
 
@@ -101,7 +99,7 @@ public class EContacts extends AppCompatActivity
         contactlist = new ArrayList<ContactTemplate>() ;
 
         String url = "http://192.168.1.187:3001/contacts/" + pid;
-      //String url = "http://172.28.19.61:3001/contacts/" + pid;
+      //String url = "http://172.28.16.92:3001/contacts/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override

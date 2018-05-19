@@ -52,9 +52,10 @@
         <activity android:name=".MessageSystem" />
 
         <service android:name=".BackgroundService" />
+
         <receiver android:name=".AlarmReceiver" />
 
-        <activity android:name=".AlarmStop"></activity>
+        <activity android:name=".AlarmStop" />
     </application>
 
 </manifest>

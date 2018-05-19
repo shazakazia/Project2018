@@ -71,7 +71,7 @@ public class signUp extends Activity {
         final String dname = doctoremailedit.getText().toString().trim();
         final String url = "http://192.168.1.187:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
 
-      //  final String url = "http://172.28.19.61:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
+        //final String url = "http://172.28.16.92:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -89,8 +89,8 @@ public class signUp extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         //Toast.makeText(signUp.this,error.toString(),Toast.LENGTH_LONG).show();
                         if(error.toString().equals("com.android.volley.AuthFailureError"))
-                            //Toast.makeText(signUp.this, "Please complete all fields", Toast.LENGTH_LONG).show();
-                            Toast.makeText(signUp.this, "Invalid Doctor ID", Toast.LENGTH_LONG).show();
+                            Toast.makeText(signUp.this, "Please complete all fields", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(signUp.this, "Invalid Doctor ID", Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
