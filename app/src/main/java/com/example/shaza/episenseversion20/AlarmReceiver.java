@@ -13,7 +13,7 @@ public class AlarmReceiver extends BroadcastReceiver {
            // background.putExtra("status", 7);
         Log.d("heree","HERE5");
         context.startService(background);
-        ;
+
 
     }
 

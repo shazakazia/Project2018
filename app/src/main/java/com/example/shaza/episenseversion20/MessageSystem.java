@@ -46,9 +46,11 @@ public class MessageSystem extends AppCompatActivity {
         }
 
         txt = "EPISENSE: SEIZURE ALERT! \n" + " Patient name : " + name  ;
-        phonenum = "+971561487886;";
+
+
+        //phonenum = "+971561487886;";
         sendMessage(phonenum,txt);
-        finish();
+        finishAffinity();
 
     }
 

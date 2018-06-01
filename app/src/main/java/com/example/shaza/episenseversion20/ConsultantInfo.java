@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.shaza.episenseversion20.loginScreen.IP;
+
 public class ConsultantInfo extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,8 +90,8 @@ public class ConsultantInfo extends AppCompatActivity
         nav_mail.setText(pemail);
 
         mQueue = Volley.newRequestQueue(this);
-        String url = "http://192.168.1.187:3001/doctors/" + did;
-        //String url = "http://172.28.16.92:3001/doctors/" + did;
+       // String url = "http://192.168.1.187:3001/doctors/" + did;
+        String url = "http://"+IP+"/doctors/" + did;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -184,14 +186,6 @@ public class ConsultantInfo extends AppCompatActivity
                 i.putExtra("Patient email", pemail);
                 startActivity(i);
                 break;
-            case R.id.nav_consultant:
-                Intent g= new Intent(ConsultantInfo.this,ConsultantInfo.class);
-                g.putExtra("Patient ID",pid);
-                g.putExtra("Doctor ID", did);
-                g.putExtra("Patient name", name);
-                g.putExtra("Patient email", pemail);
-                startActivity(g);
-                break;
             case R.id.nav_contacts:
                 Intent s= new Intent(ConsultantInfo.this,EContacts.class);
                 s.putExtra("Doctor ID", did);
@@ -203,9 +197,10 @@ public class ConsultantInfo extends AppCompatActivity
             case R.id.nav_logout:
                 Intent l = getBaseContext().getPackageManager()
                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
+                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                finishAffinity();
                 startActivity(l);
+                System.exit(0);
                 break;
 
         }

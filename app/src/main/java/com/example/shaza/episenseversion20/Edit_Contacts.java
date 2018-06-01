@@ -1,24 +1,26 @@
 package com.example.shaza.episenseversion20;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.shaza.episenseversion20.loginScreen.IP;
 
-public class Add_Contacts extends AppCompatActivity {
+public class Edit_Contacts extends AppCompatActivity {
     private EditText ecFname;
     private EditText ecLname;
     private EditText ecNumber;
@@ -69,7 +71,7 @@ public class Add_Contacts extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
+                       Toast.makeText(Edit_Contacts.this, response, Toast.LENGTH_LONG).show();
                        if (response.equals("OK") ) {
                             finishAffinity();
                         }
@@ -78,7 +80,7 @@ public class Add_Contacts extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Add_Contacts.this, error.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Edit_Contacts.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override

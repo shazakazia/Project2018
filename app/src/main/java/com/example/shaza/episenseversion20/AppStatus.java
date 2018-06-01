@@ -36,7 +36,11 @@ import org.json.JSONObject;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
+
+import static com.example.shaza.episenseversion20.loginScreen.IP;
 
 //testing .. integration
 public class AppStatus extends AppCompatActivity
@@ -48,11 +52,13 @@ public class AppStatus extends AppCompatActivity
     private String did;
     private String name;
     private String pemail;
+    private String itemname;
+    private String itemnumber;
     public static int records ;
     public static ProfileTemplate myProfile ;
     private RequestQueue mQueue ;
     private Context context;
-
+    public static List<ContactTemplate> contactlist ;
     private Handler mHandler = new Handler();
 
 
@@ -84,17 +90,20 @@ public class AppStatus extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
         getUser();
-
-        this.context = this;
+        contactlist = new ArrayList<ContactTemplate>() ;
+        getContacts();
+        this.context = this ;
         Intent alarm = new Intent(this.context, AlarmReceiver.class);
-        boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println("before bool");
+        boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
 
-        if(!alarmRunning) {
+//        if(!alarmRunning) {
             Log.d("heree","HERE2");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 0, alarm, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
-        }
+//        }
 
         mHandler.postDelayed(new Runnable() {
             public void run() {
@@ -179,7 +188,7 @@ public class AppStatus extends AppCompatActivity
                 Intent l = getBaseContext().getPackageManager()
                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                 l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
+                finishAffinity();
                 startActivity(l);
                 break;
         }
@@ -192,9 +201,9 @@ public class AppStatus extends AppCompatActivity
 
     public void getUser() {
 
-        //String url = "http://172.28.19.61:3001/patients/" + pid;
+        String url = "http://"+IP+"/patients/" + pid;
 
-        String url = "http://192.168.1.187:3001/patients/" + pid;
+        //String url = "http://192.168.1.187:3001/patients/" + pid;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>(){
                     @Override
@@ -237,6 +246,57 @@ public class AppStatus extends AppCompatActivity
         mQueue.add(request);
     }
 
+
+    public void getContacts() {
+        String url = "http://"+IP+"/contacts/" + pid;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+
+                            JSONArray jsonArray = response.getJSONArray("Contacts");
+                            // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
+
+                            JSONObject record;
+                            for(int i =0 ; i<jsonArray.length(); i++) {
+                                record = jsonArray.getJSONObject(i);
+                                itemname = record.getString("first_name")+"  "+record.getString("last_name") ;
+                                itemnumber = record.getString("contact_number");
+
+                                ContactTemplate contact = new ContactTemplate(itemname, itemnumber);
+                                // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
+                                // myContacts.add(itemname);
+                                //System.out.println("here");
+                                contactlist.add(contact);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },new Response.ErrorListener(){
+            public void onErrorResponse(VolleyError error){
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+    }
+
+    public void logoutUser() {
+        Intent alarm = new Intent(this.context, AlarmReceiver.class);
+        System.out.println("at logout bool");
+        boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        System.out.println("after cancel");
+        alarmRunning = (PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+    }
     // public void send message()
 //   {
 //
@@ -248,35 +308,35 @@ public class AppStatus extends AppCompatActivity
 //           startActivity(x); }
 //   }
 
-    public String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements();) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf
-                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    System.out.println("ip1--:" + inetAddress);
-                    System.out.println("ip2--:" + inetAddress.getHostAddress());
-
-                    // for getting IPV4 format
-                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address){
-
-                        String ip = inetAddress.getHostAddress().toString();
-                        System.out.println("ip---::" + ip);
-                        Toast.makeText(AppStatus.this, ip, Toast.LENGTH_LONG).show();
-//                        TextView mytxtTextView = findViewById(R.id.mytext);
-//                        mytxtTextView.setText(ip);
-                        // return inetAddress.getHostAddress().toString();
-                        return ip;
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            Log.e("IP Address", ex.toString());
-        }
-        return null;
-    }
+//    public String getLocalIpAddress() {
+//        try {
+//            for (Enumeration<NetworkInterface> en = NetworkInterface
+//                    .getNetworkInterfaces(); en.hasMoreElements();) {
+//                NetworkInterface intf = en.nextElement();
+//                for (Enumeration<InetAddress> enumIpAddr = intf
+//                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+//                    InetAddress inetAddress = enumIpAddr.nextElement();
+//                    System.out.println("ip1--:" + inetAddress);
+//                    System.out.println("ip2--:" + inetAddress.getHostAddress());
+//
+//                    // for getting IPV4 format
+//                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address){
+//
+//                        String ip = inetAddress.getHostAddress().toString();
+//                        System.out.println("ip---::" + ip);
+//                        Toast.makeText(AppStatus.this, ip, Toast.LENGTH_LONG).show();
+////                        TextView mytxtTextView = findViewById(R.id.mytext);
+////                        mytxtTextView.setText(ip);
+//                        // return inetAddress.getHostAddress().toString();
+//                        return ip;
+//                    }
+//                }
+//            }
+//        } catch (Exception ex) {
+//            Log.e("IP Address", ex.toString());
+//        }
+//        return null;
+//    }
 
 }
 

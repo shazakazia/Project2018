@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
         import java.util.Map;
 
+import static com.example.shaza.episenseversion20.loginScreen.IP;
+
 public class signUp extends Activity {
     private Button signUpbtn;
     private EditText passwordedit;
@@ -69,7 +71,7 @@ public class signUp extends Activity {
         final String lname = lastnameedit.getText().toString().trim();
         final String pid = patientidedit.getText().toString().trim();
         final String dname = doctoremailedit.getText().toString().trim();
-        final String url = "http://192.168.1.187:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
+        final String url = "http://"+IP+"/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
 
         //final String url = "http://172.28.16.92:3001/patients?patient_id=" + pid + "&patient_password=" + password + "&email=" + email + "&first_name=" + fname + "&last_name=" + lname + "&doctor_email=" + dname;
 

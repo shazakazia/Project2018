@@ -25,15 +25,16 @@ import org.json.JSONObject;
 
 import static com.example.shaza.episenseversion20.AppStatus.myProfile;
 import static com.example.shaza.episenseversion20.AppStatus.records;
+import static com.example.shaza.episenseversion20.loginScreen.IP;
 
 public class BackgroundService extends Service {
 
     public static MediaPlayer mediaPlayer ;
     private RequestQueue mQueue ;
-    //private int total ;
+   // public static boolean checklogout =false;
     private boolean isRunning;
     private Context context;
-    private Thread backgroundThread;
+    public Thread backgroundThread;
     private static final int myid=9090 ;
     public View v ;
 
@@ -52,64 +53,73 @@ public class BackgroundService extends Service {
     }
 
     private Runnable myTask = new Runnable() {
-        public void run() {
+       public void run() {
 
-            System.out.println("SERVICE IS RUNNING");
+            Log.d("still here", "in run");
+               System.out.println("SERVICE IS RUNNING");
 
-            mQueue = Volley.newRequestQueue(BackgroundService.this);
-          // final String url = "http://172.28.16.92:3001/patients/2/numberofseizures";
-             final String url = "http://192.168.1.187:3001/patients/2/numberofseizures";
+               mQueue = Volley.newRequestQueue(BackgroundService.this);
+               final String url = "http://" + IP + "/patients/2/numberofseizures";
+               //   final String url = "http://192.168.1.187:3001/patients/2/numberofseizures";
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                    new Response.Listener<JSONObject>(){
-                        @Override
-                        public void onResponse(JSONObject response){
-                            try {
-                                JSONArray jsonArray = response.getJSONArray("Seizures");
-                                JSONObject patient = jsonArray.getJSONObject(0);
-                                currentrecords = Integer.parseInt( patient.getString("numberOfSeizures"));
+               JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                       new Response.Listener<JSONObject>() {
+                           @Override
+                           public void onResponse(JSONObject response) {
+                               try {
+                                   JSONArray jsonArray = response.getJSONArray("Seizures");
+                                   JSONObject patient = jsonArray.getJSONObject(0);
+                                   currentrecords = Integer.parseInt(patient.getString("numberOfSeizures"));
 
-                                Log.d("done",patient.getString("numberOfSeizures"));
-                                if(records<currentrecords)
-                                {
-                                    Log.d("here", "hereeeeeeeeee") ;
-                                    AppStatus.records=currentrecords ;
-                                    showNotification(v);
-                                    sendmessage();
-                                    mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_ALARM_ALERT_URI);
-                                    mediaPlayer.start();
-                                }
+                                   Log.d("done", patient.getString("numberOfSeizures"));
+                                   if (records < currentrecords) {
+                                       Log.d("here", "hereeeeeeeeee");
+                                       AppStatus.records = currentrecords;
+                                       showNotification(v);
+                                       sendmessage();
+                                       mediaPlayer = MediaPlayer.create(context, R.raw.helptone);
+                                       mediaPlayer.setLooping(true);
+                                       mediaPlayer.start();
+                                   }
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },new Response.ErrorListener(){
-                public void onErrorResponse(VolleyError error){
-                    error.printStackTrace();
-                }
-            });
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }, new Response.ErrorListener() {
+                   public void onErrorResponse(VolleyError error) {
+                       error.printStackTrace();
+                   }
+               });
 
-            mQueue.add(request);
-
-
-            stopSelf();
-        }
+               mQueue.add(request);
+               Log.d("below queue", "going to destroy");
+               stopSelf();
+               Log.d("wentttt", "wennttt");
+       }
     };
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         this.isRunning = false;
+        Log.d("destroy", "hereee");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+//        if(checklogout)
+//        {
+//            Log.d("called check log out","true check") ;
+//            backgroundThread.interrupt();
+//        }
         if(!this.isRunning) {
             this.isRunning = true;
             Log.d("heree","HERE3");
             this.backgroundThread.start();
             Log.d("heree","HERE4");
         }
+
         return START_STICKY;
     }
 
@@ -132,10 +142,10 @@ public class BackgroundService extends Service {
         nm.notify(myid,builder.build());
     }
 
+
      public void sendmessage() {
            Intent x = new Intent(this, MessageSystem.class);
            x.putExtra("Patient name",myProfile.getFullname());
            x.putExtra("Patient ID", myProfile.getId());
            startActivity(x); }
-
 }

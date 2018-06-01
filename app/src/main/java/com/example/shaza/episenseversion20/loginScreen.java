@@ -25,6 +25,7 @@ public class loginScreen extends Activity {
     private EditText emailedit;
     private EditText passwordedit;
     private ProgressDialog progressDialog ;
+    public static String IP ="192.168.1.149:3001";
 
     private final String key_email="email";
     private final String key_password="password";
@@ -68,9 +69,8 @@ public class loginScreen extends Activity {
 
         final String email = emailedit.getText().toString().trim();
         final String password = passwordedit.getText().toString().trim();
-        final String url = "http://192.168.1.187:3001/patients/login?email=" + email + "&patient_password=" + password;
+        final String url = "http://"+IP+"/patients/login?email=" + email + "&patient_password=" + password;
        //final String url = "http://172.28.16.92:3001/patients/login?email=" + email + "&patient_password=" + password;
-
 
 
         final String id;

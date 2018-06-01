@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -33,12 +35,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.example.shaza.episenseversion20.AppStatus.contactlist;
+import static com.example.shaza.episenseversion20.loginScreen.IP;
 
 public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     //public static ArrayList<String> myContacts;
     FloatingActionButton Addbutton ;
+    private Button Editbutton;
+    private Button Deletebutton;
     private RequestQueue mQueue ;
     private String pid;
     private String itemname;
@@ -49,7 +58,6 @@ public class EContacts extends AppCompatActivity
     private TextView nav_user;
     private TextView nav_mail;
 
-    private List<ContactTemplate> contactlist ;
 
 
 
@@ -75,6 +83,8 @@ public class EContacts extends AppCompatActivity
 
         final ListView list = (ListView) findViewById(R.id.contact_list) ;
         Addbutton = findViewById(R.id.addbutton) ;
+        Deletebutton = findViewById(R.id.deletebtn) ;
+        Editbutton = findViewById(R.id.editbtn);
 
 
 
@@ -94,41 +104,52 @@ public class EContacts extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
 
-
-       // myContacts= new ArrayList<String>();
-        contactlist = new ArrayList<ContactTemplate>() ;
-
-        String url = "http://192.168.1.187:3001/contacts/" + pid;
-      //String url = "http://172.28.16.92:3001/contacts/" + pid;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-
-                            JSONArray jsonArray = response.getJSONArray("Contacts");
-                            // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
-
-                            JSONObject record;
-                            for(int i =0 ; i<jsonArray.length(); i++)
-                            {
-                                record = jsonArray.getJSONObject(i);
-                                itemname = record.getString("first_name")+"  "+record.getString("last_name") ;
-                                itemnumber = record.getString("contact_number");
-
-                                ContactTemplate contact = new ContactTemplate(itemname,itemnumber) ;
-                               // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
-                               // myContacts.add(itemname);
-                                //System.out.println("here");
-                                contactlist.add(contact) ;
-
-
-                              populate(contactlist,list);
-                               //System.out.println(myContacts.size());
-                                // Log.d(item,"OUTPUT_ITEM");
-                                //Log.d(myRec.get(i), "OUTPUT_RECS");
 //
-                            }
+//       // myContacts= new ArrayList<String>();
+//        contactlist = new ArrayList<ContactTemplate>() ;
+//
+//       // String url = "http://192.168.1.187:3001/contacts/" + pid;
+//      String url = "http://"+IP+"/contacts/" + pid;
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>(){
+//                    @Override
+//                    public void onResponse(JSONObject response){
+//                        try {
+//
+//                            JSONArray jsonArray = response.getJSONArray("Contacts");
+//                            // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
+//
+//                            JSONObject record;
+//                            for(int i =0 ; i<jsonArray.length(); i++)
+//                            {
+//                                record = jsonArray.getJSONObject(i);
+//                                itemname = record.getString("first_name")+"  "+record.getString("last_name") ;
+//                                itemnumber = record.getString("contact_number");
+//
+//                                ContactTemplate contact = new ContactTemplate(itemname,itemnumber) ;
+//                               // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
+//                               // myContacts.add(itemname);
+//                                //System.out.println("here");
+//                                contactlist.add(contact) ;
+//
+//
+                              populate(contactlist,list);
+
+                            Deletebutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent x= new Intent(EContacts.this,Edit_Contacts.class);
+                                    x.putExtra("Patient ID",pid);
+                                    startActivity(x);
+                                }
+                            });
+
+                            Editbutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
 
                             Addbutton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -139,20 +160,6 @@ public class EContacts extends AppCompatActivity
 
                                 }
                             });
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },new Response.ErrorListener(){
-            public void onErrorResponse(VolleyError error){
-                error.printStackTrace();
-            }
-        });
-
-        mQueue.add(request);
-        //populateListview();
     }
 
     public void addNew()
@@ -229,20 +236,13 @@ public class EContacts extends AppCompatActivity
                 g.putExtra("Patient email", pemail);
                 startActivity(g);
                 break;
-            case R.id.nav_contacts:
-                Intent s= new Intent(EContacts.this,EContacts.class);
-                s.putExtra("Doctor ID", did);
-                s.putExtra("Patient ID",pid);
-                s.putExtra("Patient name", name);
-                s.putExtra("Patient email", pemail);
-                startActivity(s);
-                break;
             case R.id.nav_logout:
                 Intent l = getBaseContext().getPackageManager()
                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                 l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
+                finishAffinity();
                 startActivity(l);
+                System.exit(0);
                 break;
 
         }

@@ -35,6 +35,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.shaza.episenseversion20.loginScreen.IP;
+
 public class MedicalRec extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
    // public static ArrayList<String> myRec;
@@ -94,7 +96,7 @@ public class MedicalRec extends AppCompatActivity
 
         mQueue = Volley.newRequestQueue(this);
         recordlist = new ArrayList<RecordsTemplate>() ;
-        String url = "http://192.168.1.187:3001/patients/" + pid+ "/history";
+        String url = "http://"+IP+"/patients/" + pid+ "/history";
         //String url = "http://172.28.16.92:3001/patients/" + pid+ "/history";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -198,14 +200,6 @@ public class MedicalRec extends AppCompatActivity
                 h.putExtra("Patient email", pemail);
                 startActivity(h);
                 break;
-            case R.id.nav_records:
-                Intent i= new Intent(MedicalRec.this,MedicalRec.class);
-                i.putExtra("Doctor ID", did);
-                i.putExtra("Patient ID",pid);
-                i.putExtra("Patient name", name);
-                i.putExtra("Patient email", pemail);
-                startActivity(i);
-                break;
             case R.id.nav_consultant:
                 Intent g= new Intent(MedicalRec.this,ConsultantInfo.class);
                 g.putExtra("Patient ID",pid);
@@ -226,8 +220,9 @@ public class MedicalRec extends AppCompatActivity
                 Intent l = getBaseContext().getPackageManager()
                         .getLaunchIntentForPackage( getBaseContext().getPackageName() );
                 l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finish();
+                finishAffinity();
                 startActivity(l);
+                System.exit(0);
                 break;
 
         }
