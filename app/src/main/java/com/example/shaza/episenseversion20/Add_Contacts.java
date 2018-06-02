@@ -60,6 +60,11 @@ public class Add_Contacts extends AppCompatActivity {
     }
 
     public void add() {
+        if(ecFname.getText().toString().trim().isEmpty()||ecLname.getText().toString().trim().isEmpty()||ecNumber.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(Add_Contacts.this, "Details Incomplete!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         final String fname = ecFname.getText().toString().trim();
         final String lname = ecLname.getText().toString().trim();
@@ -76,12 +81,13 @@ public class Add_Contacts extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
+                      // Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
                        if (response.equals("OK") ) {
                            ContactTemplate contact = new ContactTemplate(fname,lname, number);
                            contactlist.add(contact);
                            adapter.notifyDataSetChanged();
-                            finish();
+                           Toast.makeText(Add_Contacts.this, "Contact Created", Toast.LENGTH_LONG).show();
+                           finish();
 
                         }
                     }

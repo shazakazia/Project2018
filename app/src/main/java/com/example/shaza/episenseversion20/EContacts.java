@@ -94,7 +94,7 @@ public class EContacts extends AppCompatActivity
             name = extras.getString("Patient name");
             pemail = extras.getString("Patient email");}
 
-        Toast.makeText(EContacts.this, did, Toast.LENGTH_LONG).show();
+       // Toast.makeText(EContacts.this, did, Toast.LENGTH_LONG).show();
 
         nav_user.setText(name);
         nav_mail.setText(pemail);

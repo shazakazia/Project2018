@@ -76,14 +76,16 @@ public class CustomAdapter extends BaseAdapter {
 
         ContactTemplate row_pos = myList.get(position) ;
         String name = row_pos.getFname()+" " +row_pos.getLname();
+        String numberset = "+"+row_pos.getNumber();
         holder.name.setText(name);
-        holder.number.setText(row_pos.getNumber()) ;
+        holder.number.setText(numberset) ;
 
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v2) {
                 ContactTemplate editcontact = myList.get(position) ;
+                //System.out.println(position);
                 Intent e= new Intent(v2.getContext(),Edit_Contacts.class);
                 e.putExtra("Patient ID","2");
                 e.putExtra("Old Number",editcontact.getNumber() );
@@ -100,10 +102,10 @@ public class CustomAdapter extends BaseAdapter {
                 System.out.println("here in set on click");
                 ContactTemplate deletecontact = myList.get(position) ;
                 String dnumber = deletecontact.getNumber();
-                Toast.makeText(context, dnumber, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, dnumber, Toast.LENGTH_SHORT).show();
                 final String url ="http://"+IP+"/contacts/"+pid+"?contact_number="+dnumber ;
                 System.out.println(url);
-                StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
+                StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -111,6 +113,7 @@ public class CustomAdapter extends BaseAdapter {
                                 if (response.equals("OK") ) {
                                     myList.remove(position);
                                     notifyDataSetChanged();
+                                    Toast.makeText(v3.getContext(), "Contact Deleted", Toast.LENGTH_LONG).show();
                                 }
                             }
                         },

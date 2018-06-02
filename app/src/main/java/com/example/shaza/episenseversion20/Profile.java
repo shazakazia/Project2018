@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.shaza.episenseversion20.AppStatus.myProfile;
+import static com.example.shaza.episenseversion20.loginScreen.IP;
 
 public class Profile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,9 +95,9 @@ public class Profile extends AppCompatActivity
 
         Bundle extras = intent.getExtras();
         if(extras != null)
-            pid = extras.getString("Patient ID");
+        pid = extras.getString("Patient ID");
             did = extras.getString("Doctor ID");
-        Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
+        //Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +232,7 @@ public class Profile extends AppCompatActivity
                 checknumber = checknumber.replaceFirst("05","+9715");
             }
             final String contact = checknumber ;
-            final String url = "http://10.0.2.2:3001/patients/" +pid+"?"+"date_of_birth="+dob+"&contact_number="+contact+"&address="+address ;
+            final String url = "http://"+IP+"/patients/" +pid+"?"+"date_of_birth="+dob+"&contact_number="+contact+"&address="+address ;
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                     new Response.Listener<String>() {
                         @Override

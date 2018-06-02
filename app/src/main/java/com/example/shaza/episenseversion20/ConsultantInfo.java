@@ -87,7 +87,7 @@ public class ConsultantInfo extends AppCompatActivity
             did = extras.getString("Doctor ID");
             name = extras.getString("Patient name");
             pemail = extras.getString("Patient email");}
-       Toast.makeText(ConsultantInfo.this, did, Toast.LENGTH_LONG).show();
+       //Toast.makeText(ConsultantInfo.this, did, Toast.LENGTH_LONG).show();
 
         nav_user.setText(name);
         nav_mail.setText(pemail);

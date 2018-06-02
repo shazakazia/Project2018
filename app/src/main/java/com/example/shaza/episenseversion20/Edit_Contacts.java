@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.shaza.episenseversion20.EContacts.adapter;
 import static com.example.shaza.episenseversion20.loginScreen.IP;
 import static com.example.shaza.episenseversion20.AppStatus.contactlist;
 
@@ -31,7 +32,7 @@ public class Edit_Contacts extends AppCompatActivity {
     private String cnumber;
     private String foname;
     private String loname;
-    private String position;
+    private Integer position;
 
     private final String key_firstname = "firstname";
     private final String key_lastname = "lastname";
@@ -50,7 +51,7 @@ public class Edit_Contacts extends AppCompatActivity {
         if (extras != null) {
             pid = extras.getString("Patient ID");
             cnumber = extras.getString("Old Number");
-            position = extras.getString("Postion");
+            position = extras.getInt("Position");
             foname = extras.getString("Old fName");
             loname = extras.getString("Old lName");
         }
@@ -75,22 +76,40 @@ public class Edit_Contacts extends AppCompatActivity {
     }
 
     public void edit(String ccnumber) {
-
+        if(ecFname.getText().toString().trim().isEmpty()||ecLname.getText().toString().trim().isEmpty()||ecNumber.getText().toString().trim().isEmpty())
+        {
+            Toast.makeText(Edit_Contacts.this, "Details Incomplete!", Toast.LENGTH_LONG).show();
+            return;
+        }
         final String fname = ecFname.getText().toString().trim();
         final String lname = ecLname.getText().toString().trim();
-        final String nnumber = ecNumber.getText().toString().trim();
         final String cnumber = ccnumber;
+        String checknumber = ecNumber.getText().toString().trim();
 
-        final String url = "http://"+IP+"/contacts?patient_id=" + pid + "?first_name="+fname+"&last_name="+lname+"&contact_number="+cnumber+"&new_number="+nnumber;
+        if(checknumber.substring(0, 2).equals("05"))
+        {
+            checknumber = checknumber.replaceFirst("05","9715");
+        }
+        final String nnumber = checknumber ;
+        if(fname.isEmpty()||lname.isEmpty()||nnumber.isEmpty())
+        {
+            Toast.makeText(Edit_Contacts.this, "Details Incomplete!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final String url = "http://"+IP+"/contacts/" + pid + "?first_name="+fname+"&last_name="+lname+"&contact_number="+cnumber+"&new_number="+nnumber;
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       Toast.makeText(Edit_Contacts.this, response, Toast.LENGTH_LONG).show();
+                      // Toast.makeText(Edit_Contacts.this, response, Toast.LENGTH_LONG).show();
                        if (response.equals("OK") ) {
                            ContactTemplate editedc = new ContactTemplate(fname,lname,nnumber);
-                            contactlist.set(Integer.parseInt(position),editedc);
+                           System.out.println(position);
+                           contactlist.set(position,editedc);
+                           adapter.notifyDataSetChanged();
+                           Toast.makeText(Edit_Contacts.this, "Edited details saved.", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }

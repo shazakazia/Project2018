@@ -25,7 +25,7 @@ public class loginScreen extends Activity {
     private EditText emailedit;
     private EditText passwordedit;
     private ProgressDialog progressDialog ;
-    public static String IP ="172.28.18.40:3001";
+    public static String IP ="10.0.2.2:3001";
 
     private final String key_email="email";
     private final String key_password="password";

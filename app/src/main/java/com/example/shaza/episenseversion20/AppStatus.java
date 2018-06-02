@@ -241,7 +241,7 @@ public class AppStatus extends AppCompatActivity
 
                             myProfile = new ProfileTemplate(fname,lname,fullname,id,email,address,dob,contactnum,docname) ;
                             name = fullname ;
-                            Toast.makeText(AppStatus.this, name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AppStatus.this, "Welcome " + name, Toast.LENGTH_SHORT).show();
                             pemail= email ;
                             nav_user.setText(name);
                             nav_mail.setText(pemail);
