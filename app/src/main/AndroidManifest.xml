@@ -56,6 +56,7 @@
         <receiver android:name=".AlarmReceiver" />
 
         <activity android:name=".AlarmStop" />
+        <activity android:name=".Edit_Contacts" />
     </application>
 
 </manifest>

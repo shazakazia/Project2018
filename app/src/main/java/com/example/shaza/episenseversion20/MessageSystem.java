@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import static com.example.shaza.episenseversion20.AppStatus.contactlist;
 
 import com.android.volley.RequestQueue;
 
 public class MessageSystem extends AppCompatActivity {
 
-    EditText phone ;
+    //EditText phone ;
 //    EditText message ;
 //    Button send ;
 
@@ -30,7 +31,7 @@ public class MessageSystem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        phone = findViewById(R.id.phone) ;
+        //phone = findViewById(R.id.phone) ;
 //        message = findViewById(R.id.txtmessage) ;
 //        send = findViewById(R.id.sendbtn);
 
@@ -45,12 +46,15 @@ public class MessageSystem extends AppCompatActivity {
             name = extras.getString("Patient name");
         }
 
-        txt = "EPISENSE: SEIZURE ALERT! \n" + " Patient name : " + name  ;
-
-
-        //phonenum = "+971561487886;";
-        sendMessage(phonenum,txt);
-        finishAffinity();
+        txt = "EpiSense: SEIZURE ALERT! \n" + "Patient name : " + name  ;
+        ContactTemplate msgcontact ;
+        for(int i = 0 ; i<contactlist.size() ; i++) {
+            phonenum = contactlist.get(i).getNumber() ;
+            phonenum = "+" + phonenum ;
+            System.out.println("number="+phonenum);
+            sendMessage(phonenum, txt);
+        }
+        finish();
 
     }
 

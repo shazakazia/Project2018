@@ -1,5 +1,8 @@
 package com.example.shaza.episenseversion20;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -195,12 +198,7 @@ public class ConsultantInfo extends AppCompatActivity
                 startActivity(s);
                 break;
             case R.id.nav_logout:
-                Intent l = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                finishAffinity();
-                startActivity(l);
-                System.exit(0);
+                logout();
                 break;
 
         }
@@ -208,5 +206,24 @@ public class ConsultantInfo extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void logout()
+    {
+        Intent l = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        Intent alarm = new Intent(this, AlarmReceiver.class);
+        System.out.println("at logout bool");
+        boolean alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        System.out.println("after cancel");
+        alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+        finishAffinity();
+        startActivity(l);
     }
 }

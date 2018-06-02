@@ -44,17 +44,17 @@
     </LinearLayout>
 
          <Button
-             android:id="@+id/deletebtn"
+             android:id="@+id/editbtn"
             android:layout_width="17dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_edit"
+             android:background="@drawable/ic_edit"
              android:backgroundTint="@color/dulllightblue"
-            android:layout_gravity="center_vertical"
+             android:layout_gravity="center_vertical"
             />
 
         <Button
-            android:id="@+id/editbtn"
+            android:id="@+id/deletebtn"
             android:layout_width="20dp"
             android:layout_height="30dp"
             android:layout_weight="1"

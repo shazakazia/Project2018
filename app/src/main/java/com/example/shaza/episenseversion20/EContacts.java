@@ -1,5 +1,8 @@
 package com.example.shaza.episenseversion20;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,7 +30,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -35,9 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.example.shaza.episenseversion20.AppStatus.contactlist;
 import static com.example.shaza.episenseversion20.loginScreen.IP;
@@ -46,8 +46,6 @@ public class EContacts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     //public static ArrayList<String> myContacts;
     FloatingActionButton Addbutton ;
-    private Button Editbutton;
-    private Button Deletebutton;
     private RequestQueue mQueue ;
     private String pid;
     private String itemname;
@@ -57,7 +55,9 @@ public class EContacts extends AppCompatActivity
     private String pemail;
     private TextView nav_user;
     private TextView nav_mail;
-
+    private Button del;
+    private Button edit;
+    public static CustomAdapter adapter;
 
 
 
@@ -83,9 +83,6 @@ public class EContacts extends AppCompatActivity
 
         final ListView list = (ListView) findViewById(R.id.contact_list) ;
         Addbutton = findViewById(R.id.addbutton) ;
-        Deletebutton = findViewById(R.id.deletebtn) ;
-        Editbutton = findViewById(R.id.editbtn);
-
 
 
         Intent intent = getIntent();
@@ -101,7 +98,6 @@ public class EContacts extends AppCompatActivity
 
         nav_user.setText(name);
         nav_mail.setText(pemail);
-
         mQueue = Volley.newRequestQueue(this);
 
 //
@@ -134,23 +130,6 @@ public class EContacts extends AppCompatActivity
 //
 //
                               populate(contactlist,list);
-
-                            Deletebutton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent x= new Intent(EContacts.this,Edit_Contacts.class);
-                                    x.putExtra("Patient ID",pid);
-                                    startActivity(x);
-                                }
-                            });
-
-                            Editbutton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-
                             Addbutton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -160,15 +139,13 @@ public class EContacts extends AppCompatActivity
 
                                 }
                             });
-    }
-
-    public void addNew()
-    {
 
     }
+
+
     public void populate(List<ContactTemplate> contactlist, ListView list)
     {
-        CustomAdapter adapter = new CustomAdapter(this,contactlist);
+        adapter = new CustomAdapter(this,contactlist);
         list.setAdapter(adapter) ;
     }
 
@@ -237,12 +214,7 @@ public class EContacts extends AppCompatActivity
                 startActivity(g);
                 break;
             case R.id.nav_logout:
-                Intent l = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finishAffinity();
-                startActivity(l);
-                System.exit(0);
+                logout();
                 break;
 
         }
@@ -250,6 +222,25 @@ public class EContacts extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void logout()
+    {
+        Intent l = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        Intent alarm = new Intent(this, AlarmReceiver.class);
+        System.out.println("at logout bool");
+        boolean alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        System.out.println("after cancel");
+        alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        System.out.println(alarmRunning);
+        finishAffinity();
+        startActivity(l);
     }
 }
 

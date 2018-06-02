@@ -132,9 +132,11 @@ public class Profile extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
+//        else {
+//
+//            super.onBackPressed();
+//        }
     }
 
     @Override
@@ -185,22 +187,7 @@ public class Profile extends AppCompatActivity
                 startActivity(s);
                 break;
             case R.id.nav_logout:
-                Intent l = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                Intent alarm = new Intent(this, AlarmReceiver.class);
-                System.out.println("at logout bool");
-                boolean alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
-                System.out.println(alarmRunning);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
-                alarmManager.cancel(pendingIntent);
-                System.out.println("after cancel");
-                alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
-                System.out.println(alarmRunning);
-
-                finishAffinity();
-               startActivity(l);
+                logout();
                 break;
         }
 
@@ -237,12 +224,15 @@ public class Profile extends AppCompatActivity
             final String key_number="number";
             final String key_dob="dob";
             final String dob = showdob.getText().toString().trim();
-            final String address = showaddress.getText().toString().trim();
-            final String contact = showcontact.getText().toString().trim();
-
-            final String url = "http://10.0.2.2:3001/patients/" +pid+"?" + "&address=" + address + "&date_of_birth=" + dob + "&contact_number=" + contact;
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+            final String address = (showaddress.getText().toString().trim());
+            String checknumber = showcontact.getText().toString().trim();
+            if(checknumber.substring(0, 2).equals("05"))
+            {
+                checknumber = checknumber.replaceFirst("05","+9715");
+            }
+            final String contact = checknumber ;
+            final String url = "http://10.0.2.2:3001/patients/" +pid+"?"+"date_of_birth="+dob+"&contact_number="+contact+"&address="+address ;
+            StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -252,7 +242,7 @@ public class Profile extends AppCompatActivity
                                 myProfile.setAddress(address);
                                 myProfile.setContactnum(contact);
                                 myProfile.setDob(dob);
-                                finish() ;
+                                Toast.makeText(Profile.this,"Updated details have been saved.",Toast.LENGTH_LONG).show();
                             }
                         }
                     },
@@ -277,15 +267,23 @@ public class Profile extends AppCompatActivity
         }
     }
 
-   // public void send message()
-//   {
-//
-//       if(check.toString().equals("1"))
-//       {
-//           Intent x = new Intent(Profile.this, MessageSystem.class);
-//           x.putExtra("name",fullname);
-//           x.putExtra("pid", id);
-//           startActivity(x); }
-//   }
+   public void logout()
+   {
+       Intent l = getBaseContext().getPackageManager()
+               .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+       l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+       Intent alarm = new Intent(this, AlarmReceiver.class);
+       System.out.println("at logout bool");
+       boolean alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+       System.out.println(alarmRunning);
+       AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+       PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
+       alarmManager.cancel(pendingIntent);
+       System.out.println("after cancel");
+       alarmRunning = (PendingIntent.getBroadcast(this, 1, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+       System.out.println(alarmRunning);
+       finishAffinity();
+       startActivity(l);
+   }
 }
 

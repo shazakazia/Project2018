@@ -16,7 +16,10 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.shaza.episenseversion20.AppStatus.contactlist;
 import static com.example.shaza.episenseversion20.loginScreen.IP;
+import static com.example.shaza.episenseversion20.EContacts.adapter;
+
 
 public class Add_Contacts extends AppCompatActivity {
     private EditText ecFname;
@@ -60,18 +63,26 @@ public class Add_Contacts extends AppCompatActivity {
 
         final String fname = ecFname.getText().toString().trim();
         final String lname = ecLname.getText().toString().trim();
-        final String number = ecNumber.getText().toString().trim();
+        String checknumber = ecNumber.getText().toString().trim();
+
+        if(checknumber.substring(0, 2).equals("05"))
+        {
+            checknumber = checknumber.replaceFirst("05","9715");
+        }
+        final String number = checknumber ;
 
         final String url = "http://"+IP+"/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
-       // final String url = "http://172.28.19.61:3001/contacts?patient_id=" + pid + "&first_name=" + fname + "&last_name=" + lname + "&contact_number=" + number;
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                        Toast.makeText(Add_Contacts.this, response, Toast.LENGTH_LONG).show();
                        if (response.equals("OK") ) {
-                            finishAffinity();
+                           ContactTemplate contact = new ContactTemplate(fname,lname, number);
+                           contactlist.add(contact);
+                           adapter.notifyDataSetChanged();
+                            finish();
+
                         }
                     }
                 },

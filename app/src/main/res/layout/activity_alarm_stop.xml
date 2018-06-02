@@ -11,9 +11,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seizure detected !"
+        android:text="SEIZURE DETECTED!"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="35dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:paddingTop="50dp"/>
@@ -29,6 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/stopb"
-        android:text="STOP"
+        android:text="TAP HERE TO STOP THE ALARM"
         android:background="@color/red"/>
 </LinearLayout>

@@ -48,11 +48,12 @@ public class AppStatus extends AppCompatActivity
 
     private TextView nav_user;
     private TextView nav_mail;
-    private String pid;
+    public static String pid;
     private String did;
     private String name;
     private String pemail;
-    private String itemname;
+    private String itemfname;
+    private String itemlname;
     private String itemnumber;
     public static int records ;
     public static ProfileTemplate myProfile ;
@@ -60,6 +61,7 @@ public class AppStatus extends AppCompatActivity
     private Context context;
     public static List<ContactTemplate> contactlist ;
     private Handler mHandler = new Handler();
+
 
 
     @Override
@@ -74,6 +76,9 @@ public class AppStatus extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        toolbar.setNavigationIcon(null);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView =  navigationView.getHeaderView(0);
@@ -103,6 +108,16 @@ public class AppStatus extends AppCompatActivity
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 1, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 60000, pendingIntent);
+//        mHandler.postDelayed(new Runnable() {
+//            public void run() {
+//                Intent h= new Intent(AppStatus.this,Profile.class);
+//                h.putExtra("Doctor ID", did);
+//                h.putExtra("Patient ID",pid);
+//                h.putExtra("Patient name", name);
+//                h.putExtra("Patient email", pemail);
+//                startActivity(h);
+//            }
+//        }, 5000);
 //        }
 
         mHandler.postDelayed(new Runnable() {
@@ -115,7 +130,6 @@ public class AppStatus extends AppCompatActivity
                 startActivity(h);
             }
         }, 5000);
-
     }
 
     @Override
@@ -150,48 +164,49 @@ public class AppStatus extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id=item.getItemId();
-        switch (id){
-
-            case R.id.nav_profile:
-                Intent h= new Intent(AppStatus.this,Profile.class);
-                h.putExtra("Doctor ID", did);
-                h.putExtra("Patient ID",pid);
-                h.putExtra("Patient name", name);
-                h.putExtra("Patient email", pemail);
-                startActivity(h);
-                break;
-            case R.id.nav_records:
-                Intent i= new Intent(AppStatus.this,MedicalRec.class);
-                i.putExtra("Doctor ID", did);
-                i.putExtra("Patient ID",pid);
-                i.putExtra("Patient name", name);
-                i.putExtra("Patient email", pemail);
-                startActivity(i);
-                break;
-            case R.id.nav_consultant:
-                Intent g= new Intent(AppStatus.this,ConsultantInfo.class);
-                g.putExtra("Patient ID",pid);
-                g.putExtra("Doctor ID", did);
-                g.putExtra("Patient name", name);
-                g.putExtra("Patient email", pemail);
-                startActivity(g);
-                break;
-            case R.id.nav_contacts:
-                Intent s= new Intent(AppStatus.this,EContacts.class);
-                s.putExtra("Doctor ID", did);
-                s.putExtra("Patient ID",pid);
-                s.putExtra("Patient name", name);
-                s.putExtra("Patient email", pemail);
-                startActivity(s);
-                break;
-            case R.id.nav_logout:
-                Intent l = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                finishAffinity();
-                startActivity(l);
-                break;
-        }
+        item.setEnabled(false);
+//        switch (id){
+//
+//            case R.id.nav_profile:
+//                Intent h= new Intent(AppStatus.this,Profile.class);
+//                h.putExtra("Doctor ID", did);
+//                h.putExtra("Patient ID",pid);
+//                h.putExtra("Patient name", name);
+//                h.putExtra("Patient email", pemail);
+//                startActivity(h);
+//                break;
+//            case R.id.nav_records:
+//                Intent i= new Intent(AppStatus.this,MedicalRec.class);
+//                i.putExtra("Doctor ID", did);
+//                i.putExtra("Patient ID",pid);
+//                i.putExtra("Patient name", name);
+//                i.putExtra("Patient email", pemail);
+//                startActivity(i);
+//                break;
+//            case R.id.nav_consultant:
+//                Intent g= new Intent(AppStatus.this,ConsultantInfo.class);
+//                g.putExtra("Patient ID",pid);
+//                g.putExtra("Doctor ID", did);
+//                g.putExtra("Patient name", name);
+//                g.putExtra("Patient email", pemail);
+//                startActivity(g);
+//                break;
+//            case R.id.nav_contacts:
+//                Intent s= new Intent(AppStatus.this,EContacts.class);
+//                s.putExtra("Doctor ID", did);
+//                s.putExtra("Patient ID",pid);
+//                s.putExtra("Patient name", name);
+//                s.putExtra("Patient email", pemail);
+//                startActivity(s);
+//                break;
+//            case R.id.nav_logout:
+//                Intent l = getBaseContext().getPackageManager()
+//                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+//                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                finishAffinity();
+//                startActivity(l);
+//                break;
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -261,10 +276,11 @@ public class AppStatus extends AppCompatActivity
                             JSONObject record;
                             for(int i =0 ; i<jsonArray.length(); i++) {
                                 record = jsonArray.getJSONObject(i);
-                                itemname = record.getString("first_name")+"  "+record.getString("last_name") ;
+                                itemfname = record.getString("first_name");
+                                itemlname = record.getString("last_name") ;
                                 itemnumber = record.getString("contact_number");
 
-                                ContactTemplate contact = new ContactTemplate(itemname, itemnumber);
+                                ContactTemplate contact = new ContactTemplate(itemfname, itemlname, itemnumber);
                                 // Toast.makeText(EContacts.this, item, Toast.LENGTH_LONG).show();
                                 // myContacts.add(itemname);
                                 //System.out.println("here");

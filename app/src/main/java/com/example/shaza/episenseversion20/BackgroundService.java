@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.shaza.episenseversion20.AppStatus.myProfile;
+import static com.example.shaza.episenseversion20.AppStatus.pid;
 import static com.example.shaza.episenseversion20.AppStatus.records;
 import static com.example.shaza.episenseversion20.loginScreen.IP;
 
@@ -55,11 +56,11 @@ public class BackgroundService extends Service {
     private Runnable myTask = new Runnable() {
        public void run() {
 
-            Log.d("still here", "in run");
-               System.out.println("SERVICE IS RUNNING");
+            //Log.d("still here", "in run");
+               System.out.println("---------------------------------------------\nSERVICE IS RUNNING\n---------------------------------------------");
 
                mQueue = Volley.newRequestQueue(BackgroundService.this);
-               final String url = "http://" + IP + "/patients/2/numberofseizures";
+               final String url = "http://" + IP + "/patients/"+pid+"/numberofseizures";
                //   final String url = "http://192.168.1.187:3001/patients/2/numberofseizures";
 
                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -71,9 +72,10 @@ public class BackgroundService extends Service {
                                    JSONObject patient = jsonArray.getJSONObject(0);
                                    currentrecords = Integer.parseInt(patient.getString("numberOfSeizures"));
 
-                                   Log.d("done", patient.getString("numberOfSeizures"));
+                                   System.out.println("---------------------------------------------\n"+patient.getString("numberOfSeizures")
+                                           +"\n---------------------------------------------");
                                    if (records < currentrecords) {
-                                       Log.d("here", "hereeeeeeeeee");
+                                       System.out.println("!!!!!!!!!!!!!!!\nPROCESSING NOTIFICATION ALARM, TEXTMESSAGE\n!!!!!!!!!!!!!!!");
                                        AppStatus.records = currentrecords;
                                        showNotification(v);
                                        sendmessage();
@@ -93,9 +95,9 @@ public class BackgroundService extends Service {
                });
 
                mQueue.add(request);
-               Log.d("below queue", "going to destroy");
+              // Log.d("below queue", "going to destroy");
                stopSelf();
-               Log.d("wentttt", "wennttt");
+              // Log.d("wentttt", "wennttt");
        }
     };
 
@@ -103,7 +105,7 @@ public class BackgroundService extends Service {
     public void onDestroy() {
         super.onDestroy();
         this.isRunning = false;
-        Log.d("destroy", "hereee");
+       // Log.d("destroy", "hereee");
     }
 
     @Override
