@@ -153,6 +153,7 @@
 
                 <EditText
                     android:id="@+id/contactnum"
+                    android:inputType="number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
@@ -193,6 +194,7 @@
 
                 <EditText
                     android:id="@+id/dob"
+                    android:inputType="date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"

@@ -47,6 +47,7 @@
 
     <EditText
         android:id="@+id/ecNumberedit"
+        android:inputType="number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
@@ -63,6 +64,6 @@
         android:layout_marginTop="30dp"
         android:background="@color/white"
         android:layout_gravity="center_horizontal"
-        android:text="Done"/>
+        android:text="Save"/>
 
 </LinearLayout>
