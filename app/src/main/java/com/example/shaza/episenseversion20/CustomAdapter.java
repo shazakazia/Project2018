@@ -109,7 +109,7 @@ public class CustomAdapter extends BaseAdapter {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(v3.getContext(), response, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(v3.getContext(), response, Toast.LENGTH_LONG).show();
                                 if (response.equals("OK") ) {
                                     myList.remove(position);
                                     notifyDataSetChanged();

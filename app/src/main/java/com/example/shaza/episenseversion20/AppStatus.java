@@ -165,48 +165,6 @@ public class AppStatus extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id=item.getItemId();
         item.setEnabled(false);
-//        switch (id){
-//
-//            case R.id.nav_profile:
-//                Intent h= new Intent(AppStatus.this,Profile.class);
-//                h.putExtra("Doctor ID", did);
-//                h.putExtra("Patient ID",pid);
-//                h.putExtra("Patient name", name);
-//                h.putExtra("Patient email", pemail);
-//                startActivity(h);
-//                break;
-//            case R.id.nav_records:
-//                Intent i= new Intent(AppStatus.this,MedicalRec.class);
-//                i.putExtra("Doctor ID", did);
-//                i.putExtra("Patient ID",pid);
-//                i.putExtra("Patient name", name);
-//                i.putExtra("Patient email", pemail);
-//                startActivity(i);
-//                break;
-//            case R.id.nav_consultant:
-//                Intent g= new Intent(AppStatus.this,ConsultantInfo.class);
-//                g.putExtra("Patient ID",pid);
-//                g.putExtra("Doctor ID", did);
-//                g.putExtra("Patient name", name);
-//                g.putExtra("Patient email", pemail);
-//                startActivity(g);
-//                break;
-//            case R.id.nav_contacts:
-//                Intent s= new Intent(AppStatus.this,EContacts.class);
-//                s.putExtra("Doctor ID", did);
-//                s.putExtra("Patient ID",pid);
-//                s.putExtra("Patient name", name);
-//                s.putExtra("Patient email", pemail);
-//                startActivity(s);
-//                break;
-//            case R.id.nav_logout:
-//                Intent l = getBaseContext().getPackageManager()
-//                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-//                l.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                finishAffinity();
-//                startActivity(l);
-//                break;
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -269,7 +227,10 @@ public class AppStatus extends AppCompatActivity
                     @Override
                     public void onResponse(JSONObject response){
                         try {
-
+                            if (response.equals("Partial Content") ) {
+                                Toast.makeText(context,"Content does not exist!", Toast.LENGTH_LONG).show();
+                                return ;
+                            }
                             JSONArray jsonArray = response.getJSONArray("Contacts");
                             // Toast.makeText(MedicalRec.this, jsonArray.length(), Toast.LENGTH_LONG).show();
 

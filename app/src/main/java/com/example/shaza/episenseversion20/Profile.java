@@ -95,7 +95,7 @@ public class Profile extends AppCompatActivity
 
         Bundle extras = intent.getExtras();
         if(extras != null)
-        pid = extras.getString("Patient ID");
+            pid = extras.getString("Patient ID");
             did = extras.getString("Doctor ID");
         //Toast.makeText(Profile.this, did, Toast.LENGTH_LONG).show();
 
